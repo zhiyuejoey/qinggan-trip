@@ -2,8 +2,11 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2027寒假青甘大环线 · 8天7晚冷湖观星+黑独山+32景点备选库</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="青甘冬季攻略" />
+  <title>2027寒假青甘大环线 · 8天7晚冬季自驾攻略</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     :root {
@@ -18,6 +21,8 @@
       --terracotta-soft: #fffbeb;
       --indigo: #4338ca;
       --indigo-soft: #eef2ff;
+      --nav-blue: #0284c7;
+      --nav-blue-soft: #f0f9ff;
       --xhs: #ff2442;
       --xhs-soft: #fff1f2;
       --danger: #dc2626;
@@ -25,7 +30,7 @@
       --radius: 14px;
       --shadow: 0 4px 18px rgba(28, 36, 48, 0.06);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
       background: var(--bg);
@@ -34,503 +39,522 @@
       -webkit-font-smoothing: antialiased;
     }
     a { color: var(--green); text-decoration: none; }
-    a:hover { text-decoration: underline; }
 
-    /* Top Nav */
+    /* Top Nav Bar */
     .topbar {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(250, 248, 244, 0.94);
-      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
     .topbar-inner {
-      max-width: 1200px;
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 12px 20px;
+      padding: 10px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      flex-wrap: wrap;
     }
-    .brand { font-weight: 800; font-size: 15.5px; color: var(--text); }
-    .nav-links { display: flex; gap: 7px; flex-wrap: wrap; }
-    .nav-links a {
-      background: #fff;
+    .brand { font-weight: 800; font-size: 15.5px; color: var(--text); white-space: nowrap; }
+    .desktop-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+    .nav-tab {
       border: 1px solid var(--border);
-      color: var(--text);
-      padding: 5px 11px;
-      border-radius: 8px;
+      background: #faf8f4;
+      color: var(--muted);
+      padding: 6px 13px;
+      border-radius: 9px;
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
+      cursor: pointer;
       transition: all 0.15s;
     }
-    .nav-links a:hover { border-color: var(--green); color: var(--green); text-decoration: none; }
+    .nav-tab:hover { border-color: var(--green); color: var(--green); }
+    .nav-tab.active {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
 
-    .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px 64px; }
-    section { margin-bottom: 40px; scroll-margin-top: 72px; }
+    /* Mobile Bottom Tab Bar */
+    .mobile-bottom-nav {
+      display: none;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1200;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(14px);
+      border-top: 1px solid var(--border);
+      padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+      box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.08);
+    }
+    .m-tab {
+      border: none;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      padding: 5px 2px;
+      border-radius: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .m-tab .ico { font-size: 18px; line-height: 1.1; }
+    .m-tab.active { background: var(--green-soft); color: var(--green); }
 
-    /* Hero */
+    /* Page Container & Tab Views */
+    .container { max-width: 1180px; margin: 0 auto; padding: 18px 16px 40px; }
+    .page-view { display: none; animation: fadeIn 0.18s ease; }
+    .page-view.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    h2 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    .sec-sub { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+
+    /* Hero Strip (Compact) */
     .hero-card {
       background: #fff;
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 24px 26px;
+      padding: 18px 20px;
       box-shadow: var(--shadow);
-      margin-bottom: 28px;
+      margin-bottom: 16px;
     }
     .hero-tag {
       display: inline-block;
       background: var(--indigo-soft);
       color: var(--indigo);
       font-weight: 700;
-      font-size: 12.5px;
-      padding: 4px 11px;
+      font-size: 12px;
+      padding: 3px 10px;
       border-radius: 999px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
-    .hero-card h1 { font-size: clamp(22px, 3vw, 30px); font-weight: 800; margin-bottom: 8px; }
-    .hero-card p { color: var(--muted); font-size: 14.5px; margin-bottom: 18px; }
-    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: 10px; }
-    .kpi { background: #faf8f4; border: 1px solid var(--border); border-radius: 10px; padding: 11px 14px; }
-    .kpi-label { font-size: 12px; color: var(--muted); }
-    .kpi-val { font-size: 16px; font-weight: 800; margin-top: 2px; color: var(--text); }
+    .hero-card h1 { font-size: clamp(19px, 2.8vw, 26px); font-weight: 800; margin-bottom: 6px; line-height: 1.3; }
+    .hero-card p { color: var(--muted); font-size: 13.5px; margin-bottom: 12px; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 8px; }
+    .kpi { background: #faf8f4; border: 1px solid var(--border); border-radius: 10px; padding: 9px 11px; }
+    .kpi-label { font-size: 11px; color: var(--muted); }
+    .kpi-val { font-size: 14.5px; font-weight: 800; margin-top: 2px; }
 
-    h2 { font-size: 22px; font-weight: 800; margin-bottom: 12px; }
-    .sec-sub { font-size: 13.5px; color: var(--muted); margin-top: -6px; margin-bottom: 14px; }
+    /* Horizontal scroll strip */
+    .scroll-strip {
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 3px;
+    }
+    .scroll-strip::-webkit-scrollbar { display: none; }
 
     /* Map */
-    .map-controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
-    .day-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+    .map-controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
     .pill {
       border: 1px solid var(--border);
       background: #fff;
       color: var(--text);
-      padding: 6px 13px;
+      padding: 7px 13px;
       border-radius: 9px;
-      font-size: 13.5px;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 700;
       cursor: pointer;
-      transition: all 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
-    .pill:hover { border-color: var(--green); color: var(--green); }
     .pill.active { background: var(--green); border-color: var(--green); color: #fff; }
     .map-tools { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
     .layer-btn { border: 1px solid var(--border); background: #fff; color: var(--muted); padding: 5px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
     .layer-btn.active { background: #1c2430; color: #fff; border-color: #1c2430; }
-    .route-status { font-size: 12px; color: var(--green); background: var(--green-soft); padding: 4px 10px; border-radius: 999px; font-weight: 600; }
+    .route-status { font-size: 11.5px; color: var(--green); background: var(--green-soft); padding: 4px 10px; border-radius: 999px; font-weight: 700; }
 
-    .map-frame { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
-    #map { width: 100%; height: 540px; z-index: 1; background: #eef2f0; }
-    @media (max-width: 640px) { #map { height: 400px; } }
+    .map-frame { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); margin-bottom: 16px; }
+    #map { width: 100%; height: 500px; z-index: 1; background: #eef2f0; }
     .map-legend {
-      padding: 12px 16px;
+      padding: 10px 14px;
       border-top: 1px solid var(--border);
       background: #fff;
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
-      font-size: 13px;
+      gap: 12px;
+      font-size: 12px;
       align-items: center;
     }
-    .legend-item { display: inline-flex; align-items: center; gap: 7px; }
-    .leg-line { width: 20px; height: 3.5px; border-radius: 2px; display: inline-block; }
-    .leg-dash { width: 20px; height: 0; border-top: 3px dashed #6d28d9; display: inline-block; }
-    .leg-opt { width: 20px; height: 0; border-top: 3px dashed #d97706; display: inline-block; }
+    .legend-item { display: inline-flex; align-items: center; gap: 6px; }
+    .leg-line { width: 18px; height: 3.5px; border-radius: 2px; display: inline-block; }
+    .leg-dash { width: 18px; height: 0; border-top: 3px dashed #6d28d9; display: inline-block; }
+    .leg-opt { width: 18px; height: 0; border-top: 3px dashed #d97706; display: inline-block; }
 
     .leaflet-tooltip.city-tooltip {
       background: rgba(255, 255, 255, 0.95);
       border: 1px solid rgba(28, 36, 48, 0.14);
       border-radius: 6px;
-      padding: 2px 7px;
-      font-size: 12px;
+      padding: 2px 6px;
+      font-size: 11.5px;
       font-weight: 700;
       color: #1c2430;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
     .leaflet-tooltip.city-tooltip::before { display: none; }
-    .popup-box { min-width: 220px; font-size: 13px; line-height: 1.55; }
+    .popup-box { min-width: 220px; font-size: 13px; line-height: 1.5; }
     .popup-title { font-size: 15px; font-weight: 800; margin-bottom: 3px; }
     .popup-meta { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    .popup-btns { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
 
+    /* Action Buttons */
     .xhs-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: var(--xhs-soft);
-      color: var(--xhs) !important;
-      border: 1px solid #fecdd3;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      text-decoration: none !important;
-      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 4px;
+      background: var(--xhs-soft); color: var(--xhs) !important;
+      border: 1px solid #fecdd3; padding: 5px 10px; border-radius: 999px;
+      font-size: 12px; font-weight: 700; white-space: nowrap;
     }
-    .xhs-btn:hover { background: #ffe4e6; }
+    .amap-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: var(--nav-blue-soft); color: var(--nav-blue) !important;
+      border: 1px solid #bae6fd; padding: 5px 10px; border-radius: 999px;
+      font-size: 12px; font-weight: 700; white-space: nowrap;
+    }
 
     /* Stargazing Banner */
     .star-banner {
       background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 60%, #312e81 100%);
       color: #fff;
       border-radius: var(--radius);
-      padding: 20px 22px;
-      margin-bottom: 24px;
+      padding: 16px 18px;
       box-shadow: var(--shadow);
     }
-    .star-banner h3 { font-size: 17px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-    .star-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+    .star-banner h3 { font-size: 16px; margin-bottom: 10px; }
+    .star-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
     .star-item {
       background: rgba(255, 255, 255, 0.09);
       border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 10px;
-      padding: 12px 14px;
-      font-size: 13px;
+      padding: 10px 12px;
+      font-size: 12.5px;
       color: rgba(255, 255, 255, 0.9);
     }
-    .star-item strong { display: block; color: #fde68a; margin-bottom: 4px; font-size: 13.5px; }
+    .star-item strong { display: block; color: #fde68a; margin-bottom: 3px; font-size: 13px; }
 
-    /* 32-Spot Catalog Section */
-    .catalog-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: var(--shadow);
-    }
-    .cat-toolbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 14px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-    .cat-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
-    .cat-btn {
-      border: 1px solid var(--border);
-      background: #fff;
-      color: var(--text);
-      padding: 5px 11px;
-      border-radius: 8px;
-      font-size: 12.5px;
-      font-weight: 600;
-      cursor: pointer;
-    }
+    /* 32-Spot Catalog */
+    .catalog-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
+    .cat-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .cat-btn { border: 1px solid var(--border); background: #fff; color: var(--text); padding: 6px 11px; border-radius: 8px; font-size: 12.5px; font-weight: 600; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
     .cat-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
-    .cat-stats {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--green);
-    }
-    .only-picked-btn {
-      border: 1px solid var(--green);
-      background: var(--green-soft);
-      color: var(--green);
-      padding: 4px 10px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
+    .cat-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .picked-badge { font-size: 13px; font-weight: 800; color: var(--green); }
+    .only-picked-btn { border: 1px solid var(--green); background: var(--green-soft); color: var(--green); padding: 6px 10px; border-radius: 8px; font-size: 12.5px; font-weight: 700; cursor: pointer; }
     .only-picked-btn.active { background: var(--green); color: #fff; }
+    .copy-btn { border: none; background: #1c2430; color: #fff; padding: 6px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 700; cursor: pointer; }
 
-    .catalog-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-      gap: 10px;
-    }
-    .c-spot {
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 13px;
-      background: #faf8f4;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 8px;
-      transition: border-color 0.15s, background 0.15s;
-    }
-    .c-spot.picked {
-      background: #f0fdf4;
-      border-color: #86efac;
-    }
-    .c-spot-top { display: flex; align-items: flex-start; gap: 8px; }
-    .c-spot-top input { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--green); cursor: pointer; flex-shrink: 0; }
+    .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(275px, 1fr)); gap: 10px; }
+    .c-spot { border: 1px solid var(--border); border-radius: 11px; padding: 12px 13px; background: #faf8f4; display: flex; flex-direction: column; justify-content: space-between; gap: 9px; }
+    .c-spot.picked { background: #f0fdf4; border-color: #86efac; }
+    .c-spot-top { display: flex; align-items: flex-start; gap: 9px; cursor: pointer; }
+    .c-spot-top input { margin-top: 2px; width: 18px; height: 18px; accent-color: var(--green); flex-shrink: 0; }
     .c-spot-title { font-weight: 700; font-size: 14px; color: var(--text); line-height: 1.35; }
     .c-spot-meta { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
     .c-spot-desc { font-size: 12.5px; color: #475569; }
     .c-spot-foot { display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .c-spot-links { display: flex; gap: 6px; flex-wrap: wrap; }
 
-    /* Day Cards + Timeline */
-    .days-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
-    .day-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: var(--shadow);
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .day-card.highlighted { border-color: var(--green); box-shadow: 0 0 0 3px rgba(15, 110, 86, 0.14); }
-    .day-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 10px;
-      padding-bottom: 12px;
-      margin-bottom: 14px;
-      border-bottom: 1px dashed var(--border);
-    }
-    .day-badge { display: inline-flex; align-items: center; gap: 9px; flex-wrap: wrap; }
-    .day-num { color: #fff; font-weight: 800; font-size: 12.5px; padding: 3px 9px; border-radius: 7px; }
-    .day-title { font-size: 16.5px; font-weight: 700; }
-    .day-stats { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12.5px; }
-    .stat-chip { background: #faf8f4; border: 1px solid var(--border); padding: 3px 9px; border-radius: 7px; font-weight: 600; color: #334155; }
+    /* Day Cards */
+    .day-jump-bar { margin-bottom: 12px; }
+    .days-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    .day-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); scroll-margin-top: 72px; }
+    .day-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; padding-bottom: 10px; margin-bottom: 11px; border-bottom: 1px dashed var(--border); }
+    .day-badge { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .day-num { color: #fff; font-weight: 800; font-size: 12px; padding: 3px 9px; border-radius: 7px; }
+    .day-title { font-size: 15.5px; font-weight: 700; }
+    .day-stats { display: flex; flex-wrap: wrap; gap: 5px; font-size: 12px; }
+    .stat-chip { background: #faf8f4; border: 1px solid var(--border); padding: 2px 8px; border-radius: 7px; font-weight: 600; color: #334155; }
 
-    .timeline {
-      background: #faf8f4;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 14px;
-      margin-bottom: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-    }
-    .tl-row { display: grid; grid-template-columns: 108px 1fr; gap: 10px; font-size: 13px; align-items: baseline; }
-    @media (max-width: 560px) { .tl-row { grid-template-columns: 1fr; gap: 2px; } }
+    .timeline { background: #faf8f4; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 7px; }
+    .tl-row { display: grid; grid-template-columns: 102px 1fr; gap: 8px; font-size: 13px; align-items: baseline; }
     .tl-time { font-weight: 800; color: var(--green); font-variant-numeric: tabular-nums; white-space: nowrap; }
     .tl-text { color: #334155; }
-    .day-note {
-      background: #f8fafc;
-      border-left: 3px solid var(--green);
-      padding: 9px 13px;
-      border-radius: 0 8px 8px 0;
-      font-size: 13.5px;
-      color: #334155;
-    }
+    .day-note { background: #f8fafc; border-left: 3px solid var(--green); padding: 9px 12px; border-radius: 0 8px 8px 0; font-size: 13px; color: #334155; }
 
     .tag { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 6px; white-space: nowrap; }
     .tag-open { background: var(--green-soft); color: var(--green); }
     .tag-opt { background: var(--terracotta-soft); color: var(--terracotta); }
     .tag-star { background: var(--indigo-soft); color: var(--indigo); }
     .tag-warn { background: var(--danger-soft); color: var(--danger); }
-    .locate-btn { font-size: 12px; color: var(--green); background: none; border: none; cursor: pointer; font-weight: 700; }
-    .locate-btn:hover { text-decoration: underline; }
+    .locate-btn { font-size: 12px; color: var(--green); background: none; border: none; cursor: pointer; font-weight: 700; padding: 4px 0; }
 
     /* Weather & Packing & Tips */
-    .card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
-    .weather-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; padding: 18px; }
-    .w-card { border: 1px solid var(--border); border-radius: 10px; padding: 13px; background: #faf8f4; }
-    .w-city { font-weight: 800; font-size: 15px; }
-    .w-alt { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+    .card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 18px; }
+    .weather-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: 10px; padding: 14px; }
+    .w-card { border: 1px solid var(--border); border-radius: 10px; padding: 12px; background: #faf8f4; }
+    .w-city { font-weight: 800; font-size: 14.5px; }
+    .w-alt { font-size: 11.5px; color: var(--muted); margin-bottom: 7px; }
     .w-row { display: flex; align-items: center; gap: 7px; font-size: 12px; margin-bottom: 5px; }
     .w-track { flex: 1; height: 7px; background: #e2e8f0; border-radius: 99px; overflow: hidden; }
     .w-hi { height: 100%; background: linear-gradient(90deg, #f59e0b, #ea580c); }
     .w-lo { height: 100%; background: linear-gradient(90deg, #38bdf8, #1d4ed8); }
-    .w-val { width: 40px; text-align: right; font-weight: 700; }
-    .w-tip { font-size: 12px; color: var(--muted); margin-top: 6px; }
+    .w-val { width: 38px; text-align: right; font-weight: 700; }
+    .w-tip { font-size: 12px; color: var(--muted); margin-top: 5px; }
 
-    .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 20px; }
-    .panel { padding: 20px; }
-    .panel h3 { font-size: 17px; font-weight: 800; margin-bottom: 12px; }
-    .checklist-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
-    .c-tab { border: 1px solid var(--border); background: #fff; padding: 5px 10px; border-radius: 8px; font-size: 12.5px; cursor: pointer; font-weight: 600; }
+    .panel { padding: 16px; }
+    .panel h3 { font-size: 17px; font-weight: 800; margin-bottom: 10px; }
+    .c-tab { border: 1px solid var(--border); background: #fff; padding: 6px 10px; border-radius: 8px; font-size: 12.5px; cursor: pointer; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
     .c-tab.active { background: var(--green); color: #fff; border-color: var(--green); }
-    .progress-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 12.5px; color: var(--muted); }
+    .progress-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 12.5px; color: var(--muted); }
     .progress-bar { flex: 1; height: 8px; background: #e2e8f0; border-radius: 99px; overflow: hidden; }
     .progress-fill { height: 100%; background: var(--green); width: 0%; transition: width 0.25s; }
-    .check-item { display: flex; align-items: flex-start; gap: 9px; padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-size: 13.5px; cursor: pointer; }
+    .check-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f1f5f9; font-size: 13.5px; cursor: pointer; }
     .check-item:last-child { border-bottom: none; }
-    .check-item input { margin-top: 4px; width: 16px; height: 16px; accent-color: var(--green); }
+    .check-item input { margin-top: 3px; width: 18px; height: 18px; accent-color: var(--green); flex-shrink: 0; }
     .check-item.done .check-title { text-decoration: line-through; color: var(--muted); }
     .check-sub { display: block; font-size: 12px; color: var(--muted); }
 
-    .notice-list { list-style: none; display: flex; flex-direction: column; gap: 11px; }
-    .notice-item { background: #faf8f4; border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font-size: 13.5px; }
+    .notice-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .notice-item { background: #faf8f4; border: 1px solid var(--border); border-radius: 10px; padding: 12px 13px; font-size: 13.5px; }
     .notice-item strong { display: block; margin-bottom: 3px; color: var(--text); }
 
-    .food-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; padding: 18px; }
-    .food-card { background: #faf8f4; border: 1px solid var(--border); border-radius: 10px; padding: 13px; font-size: 13.5px; }
-    .food-card strong { display: block; margin-bottom: 5px; font-size: 15px; }
+    .food-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; padding: 14px; }
+    .food-card { background: #faf8f4; border: 1px solid var(--border); border-radius: 10px; padding: 12px; font-size: 13px; }
+    .food-card strong { display: block; margin-bottom: 4px; font-size: 14.5px; }
 
-    footer { text-align: center; font-size: 12.5px; color: var(--muted); padding: 24px 20px 36px; border-top: 1px solid var(--border); background: #fff; }
+    /* Toast */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 84px;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(15, 23, 42, 0.94);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      max-width: 92vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* Mobile Layout */
+    @media (max-width: 768px) {
+      .desktop-tabs { display: none; }
+      .mobile-bottom-nav { display: grid; }
+      .container { padding: 12px 12px 92px; }
+      #map { height: 390px; }
+      .hero-card { padding: 14px; }
+      .tl-row { grid-template-columns: 1fr; gap: 2px; }
+    }
   </style>
 </head>
 <body>
+  <!-- Desktop Top Nav Bar -->
   <header class="topbar">
     <div class="topbar-inner">
-      <div class="brand">🌌 2027寒假 · 青甘大环线（冷湖观星 + 黑独山版）</div>
-      <nav class="nav-links">
-        <a href="#map-section">自驾地图</a>
-        <a href="#catalog">32景点备选库</a>
-        <a href="#itinerary">逐日时间表</a>
-        <a href="#weather">1月底气温</a>
-        <a href="#packing">装备清单</a>
-        <a href="#tips">自驾注意</a>
+      <div class="brand">🌌 青甘大环线 · 8天7晚冬季攻略</div>
+      <nav class="desktop-tabs" aria-label="页面切换">
+        <button class="nav-tab active" data-page="map" onclick="switchPage('map')">🗺️ 地图路线</button>
+        <button class="nav-tab" data-page="catalog" onclick="switchPage('catalog')">🧭 32景点备选</button>
+        <button class="nav-tab" data-page="itinerary" onclick="switchPage('itinerary')">🗓️ 逐日时间表</button>
+        <button class="nav-tab" data-page="packing" onclick="switchPage('packing')">🧳 气温与装备</button>
+        <button class="nav-tab" data-page="tips" onclick="switchPage('tips')">⚠️ 注意与美食</button>
       </nav>
     </div>
   </header>
 
   <main class="container">
-    <div class="hero-card">
-      <span class="hero-tag">零回头路终极版 · D4 宿冷湖观星 → D5 黑独山+鸣沙山日落 → D6 莫高窟+宿嘉峪关 → D7 仅230km宿张掖</span>
-      <h1>青甘大环线 8天7晚 冬季自驾地图与 32 景点备选库</h1>
-      <p>住一晚冷湖不仅能打卡东半球顶级暗夜星空，还彻底消灭了从水上雅丹折返大柴旦的回头路；D5 早上出门 20 分钟即达黑独山，下午轻松赶鸣沙山日落。下方「32 景点备选库」支持逐一点开小红书看实景并勾选保存你的最终清单。</p>
-      <div class="kpi-grid">
-        <div class="kpi"><div class="kpi-label">总行程</div><div class="kpi-val">8天7晚（零回头路）</div></div>
-        <div class="kpi"><div class="kpi-label">观星核心夜</div><div class="kpi-val">D4 宿冷湖暗夜区</div></div>
-        <div class="kpi"><div class="kpi-label">D5 黑独山+敦煌</div><div class="kpi-val">仅约 270 km / 3.5h</div></div>
-        <div class="kpi"><div class="kpi-label">D7 轻松休整日</div><div class="kpi-val">仅 230 km / 2.5h</div></div>
-        <div class="kpi"><div class="kpi-label">备选景点库</div><div class="kpi-val">全线 32 景点可勾选</div></div>
-      </div>
-    </div>
-
-    <!-- Map Section -->
-    <section id="map-section">
-      <h2>自驾地图（真实公路贴合）</h2>
-      <div class="map-controls">
-        <div class="day-pills" id="dayPills"></div>
-        <div class="map-tools">
-          <span class="route-status" id="routeStatus">公路路线已加载</span>
-          <button class="layer-btn active" data-layer="osm">OpenStreetMap</button>
-          <button class="layer-btn" data-layer="amap">高德中文地图</button>
+    <!-- PAGE 1: MAP -->
+    <div class="page-view active" id="page-map">
+      <div class="hero-card">
+        <span class="hero-tag">2027年1月底 · 2人自驾 · D1 18:00前西宁取车 · 冷湖观星 + 黑独山</span>
+        <h1>青甘大环线 8天7晚 冬季自驾地图</h1>
+        <p>D4 宿冷湖观星零回头路，D5 黑独山+鸣沙山日落，D6 莫高窟+宿嘉峪关，D7 仅开 230km 宿张掖。点击下方导航栏可随时切换 5 个独立功能页。</p>
+        <div class="kpi-grid">
+          <div class="kpi"><div class="kpi-label">总行程</div><div class="kpi-val">8天7晚（零回头）</div></div>
+          <div class="kpi"><div class="kpi-label">观星夜</div><div class="kpi-val">D4 冷湖暗夜区</div></div>
+          <div class="kpi"><div class="kpi-label">D5 黑独山+敦煌</div><div class="kpi-val">约 270 km</div></div>
+          <div class="kpi"><div class="kpi-label">D7 休整日</div><div class="kpi-val">仅 230 km</div></div>
         </div>
       </div>
+
+      <div class="map-controls">
+        <div class="scroll-strip" id="dayPills" style="max-width:100%;"></div>
+        <div class="map-tools">
+          <span class="route-status" id="routeStatus">公路路线已加载</span>
+          <button class="layer-btn active" data-layer="osm">OSM地图</button>
+          <button class="layer-btn" data-layer="amap">高德中文</button>
+        </div>
+      </div>
+
       <div class="map-frame">
         <div id="map"></div>
         <div class="map-legend">
-          <span class="legend-item"><span class="leg-dash"></span> D1 铁路接驳（兰州中川→兰州西→西宁）</span>
-          <span class="legend-item"><span class="leg-line" style="background:#0f6e56;"></span> 青海盐湖与冷湖段（D2–D5）</span>
-          <span class="legend-item"><span class="leg-line" style="background:#a34818;"></span> 河西走廊段（D6–D7）</span>
-          <span class="legend-item"><span class="leg-line" style="background:#1d4ed8;"></span> 祁连返程段（D8）</span>
-          <span class="legend-item"><span class="leg-opt"></span> 可选绕行（察尔汗 / 火星1号 / 卓尔山）</span>
+          <span class="legend-item"><span class="leg-dash"></span> D1 铁路</span>
+          <span class="legend-item"><span class="leg-line" style="background:#0f6e56;"></span> 青海/冷湖(D2–D5)</span>
+          <span class="legend-item"><span class="leg-line" style="background:#a34818;"></span> 河西走廊(D6–D7)</span>
+          <span class="legend-item"><span class="leg-line" style="background:#1d4ed8;"></span> 祁连返程(D8)</span>
+          <span class="legend-item"><span class="leg-opt"></span> 可选绕行</span>
         </div>
       </div>
-    </section>
 
-    <!-- Cold Lake Stargazing Callout -->
-    <div class="star-banner">
-      <h3>🌌 D4 冷湖镇 1 月底观星 3 个必看关键点</h3>
-      <div class="star-grid">
-        <div class="star-item">
-          <strong>1. 避开 1 月 22 日超级满月！</strong>
-          2027年1月22日为满月（月光极亮），<strong>1月29日为下弦月</strong>。建议把住冷湖的日期排在 <strong>1月28日及以后</strong>，前半夜几乎无月光干扰，冬季猎户座与满天繁星极清晰。
-        </div>
-        <div class="star-item">
-          <strong>2. 住冷湖镇暖气酒店，别指望火星营地</strong>
-          冷湖火星营地一般 3–10 月开放，1 月底通常歇业。冷湖全域已立法控光，住镇上正规供暖酒店，晚上开车出镇 10–15 分钟避开路灯即可观星（夜间约 -17℃ 务必全副武装+贴手机暖宝宝）。
-        </div>
-        <div class="star-item">
-          <strong>3. 水上雅丹 → 冷湖的路线选择</strong>
-          火星一号公路 3/4 是沙石搓板路且无信号（仅推荐硬派四驱）；普通城市 SUV 建议从水上雅丹经西台吉乃尔湖转 G215 铺装路前往冷湖镇，更安全稳妥。
+      <div class="star-banner">
+        <h3>🌌 D4 冷湖镇 1 月底观星 3 个必看提醒</h3>
+        <div class="star-grid">
+          <div class="star-item">
+            <strong>1. 避开 1 月 22 日超级满月</strong>
+            2027年1月22日为满月，<strong>1月29日为下弦月</strong>。建议把住冷湖排在 <strong>1月28日及以后</strong>，前半夜无月光干扰，冬季猎户座与繁星最清澈。
+          </div>
+          <div class="star-item">
+            <strong>2. 住冷湖镇暖气酒店</strong>
+            冷湖火星营地 3–10 月开放、1 月底多歇业。冷湖全域已立法控光，住镇上供暖酒店，晚间开车出镇 10–15 分钟避开路灯即可观星。
+          </div>
+          <div class="star-item">
+            <strong>3. 水上雅丹 → 冷湖车型建议</strong>
+            火星一号公路 3/4 是搓板路且无信号（仅推荐硬派四驱）；普通城市 SUV 走西台吉乃尔湖转铺装公路去冷湖更稳妥。
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- 32-Spot Interactive Catalog -->
-    <section id="catalog">
-      <h2>🧭 沿线 32 个景点完整备选库（小红书看图 + 勾选保存）</h2>
-      <p class="sec-sub">按环线顺时针分 6 段整理，点击「📕 小红书看实景」看 1 月真实画面，勾选你决定要去的景点（自动保存在本地浏览器）</p>
+    <!-- PAGE 2: 32-SPOT CATALOG -->
+    <div class="page-view" id="page-catalog">
+      <h2>🧭 沿线 32 景点备选库</h2>
+      <p class="sec-sub">点「📕 小红书」看冬季实拍，点「🧭 高德导航」直接唤起导航，勾选想去的点后一键复制发微信</p>
       <div class="catalog-card">
         <div class="cat-toolbar">
-          <div class="cat-tabs" id="catalogTabs"></div>
-          <div class="cat-stats">
-            <span id="pickedCount">已选 14 / 32</span>
+          <div class="scroll-strip" id="catalogTabs" style="max-width:100%;"></div>
+          <div class="cat-actions">
+            <span class="picked-badge" id="pickedCount">已选 18 / 32</span>
             <button class="only-picked-btn" id="onlyPickedBtn" onclick="toggleOnlyPicked()">只看已选</button>
+            <button class="copy-btn" onclick="copyPickedSpots()">📋 复制已选清单</button>
           </div>
         </div>
         <div class="catalog-grid" id="catalogGrid"></div>
       </div>
-    </section>
+    </div>
 
-    <!-- Daily Timeline Itinerary -->
-    <section id="itinerary">
-      <h2>逐日时间表与车程安排（D1–D8）</h2>
-      <p class="sec-sub">所有时间按 1 月底 18:30 天黑倒推，确保每天天黑前入住、不开夜车</p>
+    <!-- PAGE 3: DAILY ITINERARY -->
+    <div class="page-view" id="page-itinerary">
+      <h2>🗓️ 8天7晚逐日时间表</h2>
+      <p class="sec-sub">点击下方天数快速定位；所有时间按 1 月底 18:30 天黑倒推，确保不开夜车</p>
+      <div class="scroll-strip day-jump-bar" id="dayJumpBar"></div>
       <div class="days-grid" id="daysContainer"></div>
-    </section>
+    </div>
 
-    <!-- Weather -->
-    <section id="weather">
-      <h2>1月底沿线气温参考</h2>
-      <p class="sec-sub">晴天阳光足但昼夜温差达 12–17℃，大柴旦与冷湖夜间最低可达 -17℃ 以下，沿途酒店供暖普遍充足</p>
+    <!-- PAGE 4: WEATHER & PACKING -->
+    <div class="page-view" id="page-packing">
+      <h2>🌡️ 1月底沿线气温参考</h2>
+      <p class="sec-sub">昼夜温差 12–17℃，大柴旦与冷湖夜间最低可达 -17℃，酒店暖气普遍充足</p>
       <div class="card">
         <div class="weather-grid" id="weatherGrid"></div>
       </div>
-    </section>
 
-    <!-- Packing & Tips -->
-    <section id="packing">
-      <div class="two-col">
-        <div class="card panel">
-          <h3>🧳 穿衣与观星装备勾选清单（自动保存）</h3>
-          <div class="progress-wrap">
-            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-            <span id="progressText">已完成 0 / 16</span>
-          </div>
-          <div class="checklist-tabs" id="checkTabs"></div>
-          <div id="checklistItems"></div>
+      <h2>🧳 穿衣与观星装备勾选清单</h2>
+      <p class="sec-sub">勾选进度自动保存在本机浏览器中</p>
+      <div class="card panel">
+        <div class="progress-wrap">
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+          <span id="progressText">已完成 0 / 16</span>
         </div>
-
-        <div class="card panel" id="tips">
-          <h3>⚠️ 2人冬季自驾专项注意事项</h3>
-          <ul class="notice-list">
-            <li class="notice-item">
-              <strong>1. 西宁取车必查 5 项（D1 18:00 前）</strong>
-              优先租<strong>四驱 SUV</strong>。验车必查：① 随车配齐防滑链；② 已换 <strong>-25℃ 防冻玻璃水</strong>；③ 胎纹与胎压；④ 备胎与充气泵；⑤ 绕车拍视频留底。
-            </li>
-            <li class="notice-item">
-              <strong>2. 2人轮换驾驶 + 绝不开夜车</strong>
-              D3/D4/D8 车程约 5.5–6 小时，两人每 <strong>2 小时轮换</strong>；1 月底西北约 18:30 天黑且气温骤降易结暗冰，务必天黑前抵达酒店（冷湖夜间观星仅出镇 10–15 分钟，慢行勿跑远）。
-            </li>
-            <li class="notice-item">
-              <strong>3. 冰雪垭口与无人区加油/信号</strong>
-              当金山、橡皮山、扁都口、达坂山遇雪易结冰或临时管制，出发前查实时路况；G315 与冷湖段信号弱，<strong>油量过半见站就加</strong>，提前下好青海+甘肃离线地图。
-            </li>
-            <li class="notice-item">
-              <strong>4. 2026.12–2027.3 淡季优惠与冬季闭园</strong>
-              敦煌冬春政策：莫高窟淡季半价且看 <strong>10 个洞窟</strong>（09:00 开园），鸣沙山月牙泉（18:00 停检）、阳关玉门关、雅丹地质公园半价；青海茶卡、翡翠湖、黑独山等常免大门票（以官方公众号为准）。黑马河片区、冷湖火星营地、焉支山及《又见敦煌》演出冬季通常暂停。
-            </li>
-            <li class="notice-item">
-              <strong>5. 住宿与高反预防</strong>
-              茶卡、大柴旦、冷湖冬季部分民宿歇业，提前 1–2 周锁定镇中心<strong>供暖与24小时热水稳定</strong>的酒店；D1–D3 刚上高原别饮酒、不剧烈跑跳。
-            </li>
-          </ul>
-        </div>
+        <div class="scroll-strip" id="checkTabs" style="margin-bottom:10px;"></div>
+        <div id="checklistItems"></div>
       </div>
-    </section>
+    </div>
 
-    <!-- Food -->
-    <section id="food">
-      <h2>沿线暖身美食</h2>
+    <!-- PAGE 5: TIPS & FOOD -->
+    <div class="page-view" id="page-tips">
+      <h2>⚠️ 2人冬季自驾专项注意</h2>
+      <p class="sec-sub">出发前与取车时务必逐条核对</p>
+      <div class="card panel">
+        <ul class="notice-list">
+          <li class="notice-item">
+            <strong>1. 西宁取车必查 5 项（D1 18:00 前）</strong>
+            优先租<strong>四驱 SUV</strong>。验车查：① 随车配齐防滑链；② 已换 <strong>-25℃ 防冻玻璃水</strong>；③ 胎纹与胎压；④ 备胎与充气泵；⑤ 绕车拍视频留底。
+          </li>
+          <li class="notice-item">
+            <strong>2. 2人轮换驾驶 + 绝不开夜车</strong>
+            D3/D4/D8 车程约 5.5–6 小时，两人每 <strong>2 小时轮换</strong>；18:30 后气温骤降易结暗冰，务必天黑前抵达酒店（冷湖夜观星仅出镇 10–15 分钟，慢行勿跑远）。
+          </li>
+          <li class="notice-item">
+            <strong>3. 冰雪垭口与无人区加油/离线地图</strong>
+            当金山、橡皮山、扁都口、达坂山遇雪易结冰管制，出发前查实时路况；G315 与冷湖段信号弱，<strong>油量过半见站就加</strong>，提前下好青海+甘肃离线地图。
+          </li>
+          <li class="notice-item">
+            <strong>4. 2026.12–2027.3 淡季优惠与冬季闭园</strong>
+            莫高窟淡季半价且看 <strong>10 个洞窟</strong>（09:00 开园），鸣沙山（18:00 停检）半价；青海茶卡、翡翠湖、黑独山等常免大门票（以官方公众号为准）。黑马河、冷湖火星营地、焉支山及《又见敦煌》演出冬季通常暂停。
+          </li>
+          <li class="notice-item">
+            <strong>5. 住宿与高反预防</strong>
+            茶卡、大柴旦、冷湖冬季部分民宿歇业，提前 1–2 周订镇中心<strong>供暖与24小时热水稳定</strong>的酒店；D1–D3 刚上高原别饮酒、不剧烈跑跳。
+          </li>
+        </ul>
+      </div>
+
+      <h2>🍲 沿线暖身美食</h2>
       <div class="card">
         <div class="food-grid">
-          <div class="food-card"><strong>西宁（D1 / D8）</strong>手抓羊肉、青海铜锅土火锅、炕锅羊排、酿皮、甜醅子奶茶、青海老酸奶（下南关街 / 莫家街）。</div>
-          <div class="food-card"><strong>茶卡 / 大柴旦 / 冷湖（D2–D4）</strong>现煮牦牛肉汤锅、青海面片、炒拉条、红柳烤羊肉串（冷湖餐饮较少，备点自热锅）。</div>
-          <div class="food-card"><strong>敦煌 / 嘉峪关（D5–D6）</strong>敦煌驴肉黄面、胡羊焖饼、沙葱牛肉饼、热杏皮水；嘉峪关烤羊肉串与搓鱼面。</div>
-          <div class="food-card"><strong>张掖 / 门源（D7–D8）</strong>张掖卷子鸡、牛肉小饭、炒炮仗、祁连黄焖羊肉。</div>
+          <div class="food-card"><strong>西宁（D1 / D8）</strong>手抓羊肉、青海铜锅土火锅、炕锅羊排、酿皮、甜醅子奶茶、老酸奶（下南关街 / 莫家街）。</div>
+          <div class="food-card"><strong>茶卡 / 大柴旦 / 冷湖</strong>现煮牦牛肉汤锅、青海面片、炒拉条、红柳烤肉（冷湖餐饮较少，备点自热锅）。</div>
+          <div class="food-card"><strong>敦煌 / 嘉峪关</strong>敦煌驴肉黄面、胡羊焖饼、沙葱牛肉饼、热杏皮水；嘉峪关烤羊肉串与搓鱼面。</div>
+          <div class="food-card"><strong>张掖 / 门源</strong>张掖卷子鸡、牛肉小饭、炒炮仗、祁连黄焖羊肉。</div>
         </div>
       </div>
-    </section>
+    </div>
   </main>
 
-  <footer>
-    2027寒假青甘大环线 8天7晚（冷湖观星 + 黑独山版）· 路线自动贴合真实公路，实际行驶请结合高德/百度实时导航与天气路况。
-  </footer>
+  <!-- Mobile Bottom Page-Switcher Nav Bar -->
+  <nav class="mobile-bottom-nav" aria-label="底部页面导航">
+    <button class="m-tab active" data-page="map" onclick="switchPage('map')"><span class="ico">🗺️</span><span>地图</span></button>
+    <button class="m-tab" data-page="catalog" onclick="switchPage('catalog')"><span class="ico">🧭</span><span>32景点</span></button>
+    <button class="m-tab" data-page="itinerary" onclick="switchPage('itinerary')"><span class="ico">🗓️</span><span>时间表</span></button>
+    <button class="m-tab" data-page="packing" onclick="switchPage('packing')"><span class="ico">🧳</span><span>气温装备</span></button>
+    <button class="m-tab" data-page="tips" onclick="switchPage('tips')"><span class="ico">⚠️</span><span>注意美食</span></button>
+  </nav>
+
+  <div class="toast" id="toast">已复制</div>
 
   <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     const xhsUrl = (kw) => `https://www.xiaohongshu.com/search_result?keyword=${encodeURIComponent(kw)}`;
+    const amapNavUrl = (lat, lng, name) =>
+      `https://uri.amap.com/navigation?to=${lng},${lat},${encodeURIComponent(name)}&mode=car&policy=1&src=qinggan2027&callnative=1`;
+
+    function showToast(msg) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => t.classList.remove("show"), 2600);
+    }
+
+    // ====== PAGE SWITCHING CONTROLLER ======
+    let currentPage = "map";
+    window.switchPage = (pageId, skipScroll = false) => {
+      if (!document.getElementById("page-" + pageId)) pageId = "map";
+      currentPage = pageId;
+
+      document.querySelectorAll(".page-view").forEach(el => el.classList.toggle("active", el.id === "page-" + pageId));
+      document.querySelectorAll(".nav-tab, .m-tab").forEach(btn => btn.classList.toggle("active", btn.dataset.page === pageId));
+
+      if (!skipScroll) window.scrollTo({ top: 0, behavior: "instant" });
+      if (pageId === "map" && map) {
+        setTimeout(() => map.invalidateSize(), 60);
+      }
+      try { history.replaceState(null, "", "#" + pageId); } catch (e) {}
+    };
 
     const DAY_COLORS = {
       1: "#6d28d9",
@@ -539,69 +563,61 @@
       8: "#1d4ed8"
     };
 
-    // ====== ALL 32 ALONG-THE-ROUTE ATTRACTIONS CATALOG ======
     const CATALOG = [
-      // 1. 西宁 & 青海湖
       { id: "s1", seg: "西宁&青海湖", day: 1, name: "东关清真大寺 / 下南关街", status: "正常开放", tag: "open", defaultPick: true, lat: 36.615, lng: 101.792, desc: "西宁市区逛吃必去，手抓羊肉、甜醅子奶茶、老酸奶。", xhs: "西宁 下南关街 东关清真大寺 冬季" },
       { id: "s2", seg: "西宁&青海湖", day: 1, name: "青海藏文化博物院", status: "室内暖和", tag: "open", defaultPick: false, lat: 36.665, lng: 101.760, desc: "看世界最长彩绘唐卡与藏医药文化，适合怕冷备选。", xhs: "青海藏文化博物院 攻略" },
-      { id: "s3", seg: "西宁&青海湖", day: 2, name: "塔尔寺", status: "正常开放", tag: "opt", defaultPick: false, lat: 36.491, lng: 101.570, desc: "藏传佛教格鲁派名寺，酥油花/壁画/堆绣（需预留1.5h）。", xhs: "塔尔寺 冬季 攻略" },
-      { id: "s4", seg: "西宁&青海湖", day: 2, name: "拉脊山", status: "免费/雪厚", tag: "opt", defaultPick: false, lat: 36.365, lng: 101.470, desc: "高海拔经幡垭口，冬季积雪厚，去青海湖绕行可选。", xhs: "拉脊山 冬天 雪景" },
+      { id: "s3", seg: "西宁&青海湖", day: 2, name: "塔尔寺", status: "正常开放", tag: "opt", defaultPick: false, lat: 36.491, lng: 101.570, desc: "藏传佛教格鲁派名寺，酥油花/壁画/堆绣（预留1.5h）。", xhs: "塔尔寺 冬季 攻略" },
+      { id: "s4", seg: "西宁&青海湖", day: 2, name: "拉脊山", status: "免费/雪厚", tag: "opt", defaultPick: false, lat: 36.365, lng: 101.470, desc: "高海拔经幡垭口，冬季积雪厚，绕行可选。", xhs: "拉脊山 冬天 雪景" },
       { id: "s5", seg: "西宁&青海湖", day: 2, name: "日月山 & 倒淌河", status: "沿途打卡", tag: "open", defaultPick: true, lat: 36.445, lng: 101.075, desc: "青藏高原农牧分界垭口，顺路停20分钟拍照。", xhs: "日月山 冬天 风景" },
       { id: "s6", seg: "西宁&青海湖", day: 2, name: "青海湖二郎剑景区", status: "淡季优惠", tag: "open", defaultPick: true, lat: 36.584, lng: 100.472, desc: "1月底必看限定蓝冰、冰推奇观与越冬大天鹅。", xhs: "青海湖 二郎剑 1月 蓝冰" },
       { id: "s7", seg: "西宁&青海湖", day: 2, name: "青海湖断崖 / 仙女湾", status: "视雪况", tag: "opt", defaultPick: false, lat: 37.020, lng: 100.120, desc: "北岸小众观湖与天鹅湿地（黑马河冬季常闭）。", xhs: "青海湖 断崖 仙女湾 冬天" },
 
-      // 2. 茶卡 & 柴达木盐湖
       { id: "s8", seg: "茶卡&柴达木", day: 2, name: "茶卡盐湖（天空之镜）", status: "淡季常免票", tag: "open", defaultPick: true, lat: 36.785, lng: 99.076, desc: "冬日人少包场，雪山倒映冰面如镜面星球。", xhs: "茶卡盐湖 冬天 1月 实拍" },
       { id: "s9", seg: "茶卡&柴达木", day: 2, name: "茶卡壹号·盐湖景区", status: "正常开放", tag: "opt", defaultPick: false, lat: 36.750, lng: 99.130, desc: "与天空之镜二选一，设施较新。", xhs: "茶卡壹号 冬天 对比 天空之镜" },
       { id: "s10", seg: "茶卡&柴达木", day: 3, name: "可鲁克湖 & 托素湖(外星人遗址)", status: "可选", tag: "opt", defaultPick: false, lat: 37.285, lng: 96.910, desc: "德令哈附近一淡一咸双生湖，枯黄芦苇配冰面。", xhs: "可鲁克湖 外星人遗址 冬天" },
       { id: "s11", seg: "茶卡&柴达木", day: 3, name: "小柴旦湖", status: "免费路边", tag: "open", defaultPick: true, lat: 37.540, lng: 95.520, desc: "顺路途经的高原蓝绿湖泊，雪山倒影极美。", xhs: "小柴旦湖 冬天" },
-      { id: "s12", seg: "茶卡&柴达木", day: 3, name: "察尔汗盐湖", status: "淡季半价", tag: "opt", defaultPick: false, lat: 36.822, lng: 95.280, desc: "中国最大盐湖，苹果绿盐池与网红生命树（需多绕约130km）。", xhs: "察尔汗盐湖 冬天 1月" },
-      { id: "s13", seg: "茶卡&柴达木", day: 3, name: "大柴旦翡翠湖", status: "免大门票", tag: "open", defaultPick: true, lat: 37.855, lng: 95.356, desc: "祖母绿与蒂芙尼蓝盐坑，雪后通透度拉满，航拍绝美。", xhs: "大柴旦翡翠湖 冬天 1月" },
+      { id: "s12", seg: "茶卡&柴达木", day: 3, name: "察尔汗盐湖", status: "淡季半价", tag: "opt", defaultPick: false, lat: 36.822, lng: 95.280, desc: "中国最大盐湖，苹果绿盐池与网红生命树（多绕约130km）。", xhs: "察尔汗盐湖 冬天 1月" },
+      { id: "s13", seg: "茶卡&柴达木", day: 3, name: "大柴旦翡翠湖", status: "免大门票", tag: "open", defaultPick: true, lat: 37.855, lng: 95.356, desc: "祖母绿与蒂芙尼蓝盐坑，雪后通透度拉满。", xhs: "大柴旦翡翠湖 冬天 1月" },
 
-      // 3. 雅丹 & 冷湖观星
       { id: "s14", seg: "雅丹&冷湖观星", day: 4, name: "G315 网红 U 型公路", status: "免费路边", tag: "open", defaultPick: true, lat: 37.685, lng: 94.120, desc: "波浪荒漠天路（仅在停车带拍照，严禁站路中）。", xhs: "315国道 U型公路 冬天" },
       { id: "s15", seg: "雅丹&冷湖观星", day: 4, name: "东台吉乃尔湖", status: "免费观景", tag: "open", defaultPick: true, lat: 37.492, lng: 93.920, desc: "路边远观蒂芙尼蓝盐湖，严禁开车上盐滩。", xhs: "东台吉乃尔湖 冬天" },
-      { id: "s16", seg: "雅丹&冷湖观星", day: 4, name: "乌素特水上雅丹", status: "淡季半价", tag: "open", defaultPick: true, lat: 37.819, lng: 93.346, desc: "世界罕见水上雅丹，冬日冰湖配雅丹苍茫感拉满。", xhs: "水上雅丹 冬天 1月" },
-      { id: "s17", seg: "雅丹&冷湖观星", day: 4, name: "西台吉乃尔湖（双色湖）", status: "免费途经", tag: "open", defaultPick: true, lat: 37.750, lng: 93.380, desc: "公路穿湖而过，一侧蓝一侧绿，前往冷湖顺路看。", xhs: "西台吉乃尔湖 冬天" },
+      { id: "s16", seg: "雅丹&冷湖观星", day: 4, name: "乌素特水上雅丹", status: "淡季半价", tag: "open", defaultPick: true, lat: 37.819, lng: 93.346, desc: "世界罕见水上雅丹，冬日冰湖配荒漠。", xhs: "水上雅丹 冬天 1月" },
+      { id: "s17", seg: "雅丹&冷湖观星", day: 4, name: "西台吉乃尔湖（双色湖）", status: "免费途经", tag: "open", defaultPick: true, lat: 37.750, lng: 93.380, desc: "公路穿湖而过，一侧蓝一侧绿，去冷湖顺路看。", xhs: "西台吉乃尔湖 冬天" },
       { id: "s18", seg: "雅丹&冷湖观星", day: 4, name: "火星一号公路 & 俄博梁雅丹", status: "搓板路/四驱", tag: "warn", defaultPick: false, lat: 38.450, lng: 93.120, desc: "极似火星地表的无人区雅丹（3/4搓板路，普通SUV慎入）。", xhs: "火星一号公路 俄博梁 冬天 路况" },
       { id: "s19", seg: "雅丹&冷湖观星", day: 4, name: "冷湖暗夜星空 / 赛什腾山天文台", status: "观星核心", tag: "star", defaultPick: true, lat: 38.740, lng: 93.340, desc: "东半球顶级暗夜保护区，避开1月22日满月效果震撼。", xhs: "冷湖 冬天 观星 星空 攻略" },
-      { id: "s20", seg: "雅丹&冷湖观星", day: 5, name: "冷湖石油小镇遗址", status: "免费开放", tag: "open", defaultPick: true, lat: 38.820, lng: 93.380, desc: "真实废弃的50年代石油基地，比阿克塞更原始震撼。", xhs: "冷湖石油小镇 冬天" },
+      { id: "s20", seg: "雅丹&冷湖观星", day: 5, name: "冷湖石油小镇遗址", status: "免费开放", tag: "open", defaultPick: true, lat: 38.820, lng: 93.380, desc: "真实废弃的50年代石油基地，比阿克塞更原始。", xhs: "冷湖石油小镇 冬天" },
       { id: "s21", seg: "雅丹&冷湖观星", day: 5, name: "黑独山 & 胭脂山", status: "免票/景交车", tag: "open", defaultPick: true, lat: 38.940, lng: 93.450, desc: "黑白水墨雅丹与赤红胭脂山，距冷湖镇仅约20分钟！", xhs: "黑独山 胭脂山 冬天 1月 实拍" },
-      { id: "s22", seg: "雅丹&冷湖观星", day: 4, name: "南八仙雅丹魔鬼城", status: "不顺路可选", tag: "opt", defaultPick: false, lat: 38.070, lng: 94.380, desc: "柴达木密集雅丹群（住冷湖后不走大柴旦回头路，可舍弃）。", xhs: "南八仙雅丹 冬天" },
+      { id: "s22", seg: "雅丹&冷湖观星", day: 4, name: "南八仙雅丹魔鬼城", status: "不顺路可选", tag: "opt", defaultPick: false, lat: 38.070, lng: 94.380, desc: "柴达木密集雅丹群（住冷湖不走大柴旦回头路，可舍弃）。", xhs: "南八仙雅丹 冬天" },
 
-      // 4. 阿克塞 & 敦煌
-      { id: "s23", seg: "阿克塞&敦煌", day: 5, name: "阿克塞博罗转井石油小镇", status: "正常开放", tag: "opt", defaultPick: false, lat: 39.618, lng: 94.335, desc: "《九层妖塔》取景地（若上午看了冷湖石油遗址可跳过）。", xhs: "阿克塞石油小镇 冬天" },
+      { id: "s23", seg: "阿克塞&敦煌", day: 5, name: "阿克塞博罗转井石油小镇", status: "正常开放", tag: "opt", defaultPick: false, lat: 39.618, lng: 94.335, desc: "《九层妖塔》取景地（上午看了冷湖遗址可跳过）。", xhs: "阿克塞石油小镇 冬天" },
       { id: "s24", seg: "阿克塞&敦煌", day: 5, name: "敦煌丝路遗产城", status: "正常开放", tag: "opt", defaultPick: false, lat: 40.145, lng: 94.490, desc: "戈壁古建旅拍基地，适合汉服/异域写真。", xhs: "敦煌 丝路遗产城 冬天" },
       { id: "s25", seg: "阿克塞&敦煌", day: 5, name: "阳关 / 玉门关 / 敦煌雅丹(西线)", status: "淡季半价", tag: "opt", defaultPick: false, lat: 39.920, lng: 94.060, desc: "敦煌西线需半天至一天，8天行程一般时间不够。", xhs: "敦煌西线 阳关 玉门关 冬天" },
       { id: "s26", seg: "阿克塞&敦煌", day: 5, name: "鸣沙山月牙泉", status: "淡季半价", tag: "open", defaultPick: true, lat: 40.087, lng: 94.670, desc: "D5下午15:30入园（18:00停检）看沙漠日落与雪落沙丘。", xhs: "鸣沙山月牙泉 冬天 雪景 日落" },
       { id: "s27", seg: "阿克塞&敦煌", day: 6, name: "莫高窟", status: "淡季半价+10窟", tag: "open", defaultPick: true, lat: 40.036, lng: 94.809, desc: "D6 09:00最早场次，淡季人少且比旺季多看2个洞窟。", xhs: "敦煌莫高窟 冬天 1月 10个窟" },
       { id: "s28", seg: "阿克塞&敦煌", day: 5, name: "敦煌博物馆 & 沙洲夜市", status: "免费/夜市", tag: "open", defaultPick: true, lat: 40.142, lng: 94.662, desc: "室内看汉简彩塑，晚吃驴肉黄面和胡羊焖饼。", xhs: "敦煌博物馆 沙洲夜市 冬天" },
 
-      // 5. 河西走廊
       { id: "s29", seg: "河西走廊", day: 6, name: "瓜州大地之子 & 无界 & 汉武雄风", status: "免费开放", tag: "open", defaultPick: true, lat: 40.530, lng: 95.780, desc: "戈壁巨型雕塑群，D6下午下高速即达拍30分钟。", xhs: "瓜州 大地之子 无界 冬天" },
       { id: "s30", seg: "河西走廊", day: 7, name: "嘉峪关关城 & 悬壁长城 & 第一墩", status: "淡季优惠", tag: "open", defaultPick: true, lat: 39.802, lng: 98.216, desc: "天下第一雄关，冬季背靠祁连雪山极气派。", xhs: "嘉峪关关城 冬天 雪山" },
       { id: "s31", seg: "河西走廊", day: 7, name: "张掖七彩丹霞", status: "淡季开放", tag: "open", defaultPick: true, lat: 38.926, lng: 100.056, desc: "红岩覆薄雪配冬日夕阳，2号/4号观景台必去。", xhs: "张掖七彩丹霞 冬天 1月 雪景" },
       { id: "s32", seg: "河西走廊", day: 7, name: "冰沟丹霞 / 大佛寺 / 马蹄寺 / 平山湖", status: "正常开放", tag: "opt", defaultPick: false, lat: 38.960, lng: 100.220, desc: "张掖深度备选：宫殿丹霞、西夏卧佛、绝壁石窟或大峡谷。", xhs: "张掖 冰沟丹霞 马蹄寺 平山湖大峡谷 冬天" },
 
-      // 6. 祁连 & 门源返程
       { id: "s33", seg: "祁连&门源", day: 8, name: "扁都口 & G227 祁连山草原", status: "免费/查雪况", tag: "warn", defaultPick: true, lat: 38.230, lng: 100.890, desc: "中国最美高原国道，冬季草原变苍茫雪原。", xhs: "G227 扁都口 祁连草原 冬天" },
       { id: "s34", seg: "祁连&门源", day: 8, name: "祁连卓尔山 & 阿柔大寺", status: "可选/视雪况", tag: "opt", defaultPick: false, lat: 38.180, lng: 100.240, desc: "远望牛心山雪峰与祁连最大藏传寺院。", xhs: "祁连 卓尔山 阿柔大寺 冬天 1月" },
       { id: "s35", seg: "祁连&门源", day: 8, name: "岗什卡雪峰 & 门源 & 达坂山", status: "免费远观", tag: "open", defaultPick: true, lat: 37.376, lng: 101.622, desc: "5,254m 雪峰配冬日雾凇与达坂山盘山雪路。", xhs: "岗什卡雪峰 门源 达坂山 冬天" }
     ];
 
-    // ====== 8-DAY ROUTE & TIMELINE DATA ======
     const DAYS = [
       {
         day: 1, short: "D1",
-        title: "兰州中川机场 → 高铁至西宁 → 18:00前取车休整",
-        km: "动车约2.5h + 市内25km", driveTime: "轻松适应", stay: "西宁市区", alt: "2,295m", isRail: true,
+        title: "兰州中川机场 → 高铁至西宁 → 18:00前取车",
+        km: "动车2.5h + 25km", driveTime: "轻松适应", stay: "西宁市区", alt: "2,295m", isRail: true,
         schedule: [
           ["12:00–13:00", "飞抵兰州中川机场 T3，步行至中川机场东站"],
           ["13:30–16:30", "中川城际至兰州西站（45min）→ 同站换乘兰新高铁至西宁站（1h15min）"],
-          ["16:30–18:00", "西宁站周边取车验车（查四驱、防滑链、-25℃玻璃水、胎压并拍视频）"],
+          ["16:30–18:00", "西宁站周边取车验车（查四驱、防滑链、-25℃玻璃水、胎压、拍视频）"],
           ["18:30–20:30", "超市采买饮用水/零食/自热锅，下南关街吃青海土火锅，早睡防高反"]
         ],
-        note: "中川机场到西宁需在兰州西站同站换乘，预留 30–40 分钟缓冲即可，18:00 前取车很从容。",
+        note: "中川机场到西宁需在兰州西站同站换乘，预留 30–40 分钟缓冲，18:00 前取车很从容。",
         waypoints: [[36.515,103.621],[36.280,103.680],[36.065,103.750],[36.165,103.410],[36.340,102.835],[36.480,102.405],[36.505,102.105],[36.621,101.810]],
         mapLabels: [
           { name: "兰州中川机场", lat: 36.515, lng: 103.621, alt: "1,948m", status: "中转起点", desc: "乘中川城际至兰州西站。", xhs: "兰州中川机场 换乘 西宁 高铁" },
@@ -629,7 +645,7 @@
       },
       {
         day: 3, short: "D3",
-        title: "茶卡镇 → 德令哈 → 察尔汗盐湖(可选) → 大柴旦翡翠湖",
+        title: "茶卡镇 → 德令哈 → 察尔汗(可选) → 大柴旦翡翠湖",
         km: "约 420 km", driveTime: "纯车程 5.5h", stay: "大柴旦镇", alt: "3,100m → 3,170m",
         schedule: [
           ["08:30–11:00", "茶卡镇出发，沿高速抵德令哈（车程约2.5h）"],
@@ -648,15 +664,15 @@
       },
       {
         day: 4, short: "D4",
-        title: "大柴旦 → U型公路 → 东台 → 水上雅丹 → 宿冷湖镇（观星！）",
-        km: "约 380–420 km", driveTime: "纯车程 5.5–6h", stay: "冷湖镇（暗夜观星）", alt: "3,170m → 2,700m → 2,780m",
+        title: "大柴旦 → U型公路 → 东台 → 水上雅丹 → 宿冷湖镇观星",
+        km: "约 380–420 km", driveTime: "纯车程 5.5–6h", stay: "冷湖镇（观星）", alt: "3,170m → 2,780m",
         schedule: [
           ["08:30–11:00", "大柴旦满油出发，沿 G315 打卡 U型公路与东台吉乃尔湖（安全区拍45min）"],
           ["11:45–15:00", "抵达水上雅丹简餐 + 游览乌素特水上雅丹（约2h，冰湖雅丹群）"],
           ["15:00–18:00", "经西台吉乃尔湖转铺装路至冷湖镇（硬派四驱晴天可选火星1号公路）"],
           ["20:30–22:00", "冷湖暗夜保护区观星！（出镇10–15分钟避开路灯，注意 -17℃ 极寒保暖）"]
         ],
-        note: "零回头路直抵冷湖！火星营地冬季通常停业，直接订冷湖镇区有暖气的酒店；2027年1月28日后避开满月观星最佳。",
+        note: "零回头路直抵冷湖！火星营地冬季多歇业，订冷湖镇区供暖酒店；2027年1月28日后避开满月观星最佳。",
         waypoints: [[37.855,95.356],[37.540,95.620],[37.520,94.850],[37.685,94.120],[37.492,93.920],[37.819,93.346],[37.750,93.380],[38.120,93.950],[38.450,93.620],[38.740,93.340]],
         osrmStops: [[37.855,95.356],[37.685,94.120],[37.819,93.346],[38.740,93.340]],
         optionalPath: [[37.819,93.346],[38.450,93.120],[38.740,93.340]],
@@ -668,7 +684,7 @@
       {
         day: 5, short: "D5",
         title: "冷湖镇 → 黑独山 & 胭脂山 → 当金山 → 敦煌鸣沙山日落",
-        km: "约 270 km", driveTime: "纯车程 3.5–4h", stay: "敦煌市区或月牙泉镇", alt: "2,780m → 3,800m → 1,139m",
+        km: "约 270 km", driveTime: "纯车程 3.5–4h", stay: "敦煌市区/月牙泉镇", alt: "2,780m → 1,139m",
         schedule: [
           ["09:00–11:15", "冷湖出发 20min 即达黑独山！游览黑独山 & 胭脂山（约1.5–2h）+ 冷湖石油小镇遗址"],
           ["11:15–14:15", "翻越当金山（注意暗冰）直奔敦煌（约3h），途中阿克塞石油小镇可选"],
@@ -686,7 +702,7 @@
       {
         day: 6, short: "D6",
         title: "上午莫高窟 → 瓜州大地之子 → 宿嘉峪关",
-        km: "约 370 km", driveTime: "纯车程 4h（全高速）", stay: "嘉峪关市区", alt: "1,139m → 1,650m",
+        km: "约 370 km", driveTime: "纯车程 4h（高速）", stay: "嘉峪关市区", alt: "1,139m → 1,650m",
         schedule: [
           ["08:20–09:00", "敦煌市区出发至莫高窟数字展示中心（提前30–40min换票安检）"],
           ["09:00–12:30", "游览莫高窟（约3.5h：2场数字电影 + 摆渡车 + 淡季10个实体洞窟）"],
@@ -704,7 +720,7 @@
       {
         day: 7, short: "D7",
         title: "嘉峪关关城 → 张掖七彩丹霞日落（最轻松休整日）",
-        km: "约 230 km", driveTime: "纯车程 2.5–3h（全高速）", stay: "张掖市区或丹霞七彩镇", alt: "1,650m → 1,850m",
+        km: "约 230 km", driveTime: "纯车程 2.5–3h", stay: "张掖市区/七彩镇", alt: "1,650m → 1,850m",
         schedule: [
           ["09:00–11:30", "睡个懒觉后游览嘉峪关关城（约2–2.5h，背靠祁连雪山；可选悬壁长城）"],
           ["11:30–12:30", "嘉峪关午餐后轻松上高速"],
@@ -722,7 +738,7 @@
       {
         day: 8, short: "D8",
         title: "张掖 → 扁都口 → G227 祁连草原 → 门源 → 西宁还车",
-        km: "约 360 km", driveTime: "纯车程 5.5–6h", stay: "西宁还车 / 返程", alt: "1,480m → 3,792m → 2,295m",
+        km: "约 360 km", driveTime: "纯车程 5.5–6h", stay: "西宁还车 / 返程", alt: "1,480m → 2,295m",
         schedule: [
           ["08:30–10:15", "张掖出发（查好扁都口/达坂山雪况），抵扁都口与 G227 祁连草原"],
           ["10:15–11:00", "沿途观景台停车拍冬日雪原与祁连雪山（约45min）"],
@@ -741,16 +757,13 @@
       }
     ];
 
-    // ====== 1. RENDER 32-SPOT INTERACTIVE CATALOG ======
-    const PICK_KEY = "qinggan_2027_spots_v1";
+    // ====== 1. RENDER 32-SPOT CATALOG ======
+    const PICK_KEY = "qinggan_2027_spots_v3";
     let pickedSpots = {};
     try {
       const saved = localStorage.getItem(PICK_KEY);
-      if (saved) {
-        pickedSpots = JSON.parse(saved);
-      } else {
-        CATALOG.forEach(s => { if (s.defaultPick) pickedSpots[s.id] = true; });
-      }
+      if (saved) pickedSpots = JSON.parse(saved);
+      else CATALOG.forEach(s => { if (s.defaultPick) pickedSpots[s.id] = true; });
     } catch (e) {
       CATALOG.forEach(s => { if (s.defaultPick) pickedSpots[s.id] = true; });
     }
@@ -777,10 +790,13 @@
       document.getElementById("catalogGrid").innerHTML = list.map(s => {
         const isPicked = !!pickedSpots[s.id];
         const tagClass = s.tag === "open" ? "tag-open" : (s.tag === "star" ? "tag-star" : (s.tag === "warn" ? "tag-warn" : "tag-opt"));
+        const safeName = s.name.replace(/'/g, "\\'");
+        const safeXhs = s.xhs.replace(/'/g, "\\'");
+        const safeDesc = s.desc.replace(/'/g, "\\'");
         return `
           <div class="c-spot ${isPicked ? "picked" : ""}">
             <div>
-              <div class="c-spot-top">
+              <label class="c-spot-top">
                 <input type="checkbox" ${isPicked ? "checked" : ""} onchange="toggleSpot('${s.id}')" />
                 <div style="flex:1;">
                   <div style="display:flex;justify-content:space-between;gap:6px;align-items:flex-start;">
@@ -789,12 +805,15 @@
                   </div>
                   <div class="c-spot-meta">D${s.day} · ${s.seg}</div>
                 </div>
-              </div>
+              </label>
               <div class="c-spot-desc" style="margin-top:6px;">${s.desc}</div>
             </div>
             <div class="c-spot-foot">
-              <button class="locate-btn" onclick="flyToCoord(${s.lat}, ${s.lng}, '${s.name.replace(/'/g, "\\'")}', '${s.xhs.replace(/'/g, "\\'")}', '${s.desc.replace(/'/g, "\\'")}')">📍 地图看位置</button>
-              <a class="xhs-btn" href="${xhsUrl(s.xhs)}" target="_blank" rel="noopener">📕 小红书看实景</a>
+              <button class="locate-btn" onclick="flyToCoord(${s.lat}, ${s.lng}, '${safeName}', '${safeXhs}', '${safeDesc}')">📍 地图定位</button>
+              <div class="c-spot-links">
+                <a class="amap-btn" href="${amapNavUrl(s.lat, s.lng, s.name)}" target="_blank" rel="noopener">🧭 高德导航</a>
+                <a class="xhs-btn" href="${xhsUrl(s.xhs)}" target="_blank" rel="noopener">📕 小红书</a>
+              </div>
             </div>
           </div>
         `;
@@ -807,12 +826,34 @@
       try { localStorage.setItem(PICK_KEY, JSON.stringify(pickedSpots)); } catch (e) {}
       renderCatalog();
     };
+    window.copyPickedSpots = () => {
+      const selected = CATALOG.filter(s => pickedSpots[s.id]);
+      if (selected.length === 0) { showToast("还没勾选任何景点哦"); return; }
+      const byDay = {};
+      selected.forEach(s => { if (!byDay[s.day]) byDay[s.day] = []; byDay[s.day].push(s.name); });
+      const lines = ["【2027寒假青甘大环线 · 已选必去景点清单】"];
+      Object.keys(byDay).sort((a, b) => Number(a) - Number(b)).forEach(d => lines.push(`D${d}：${byDay[d].join("、")}`));
+      lines.push(`共 ${selected.length} 个景点`);
+      const text = lines.join("\n");
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast(`已复制 ${selected.length} 个景点，可直接粘贴发微信！`)).catch(() => fallbackCopy(text, selected.length));
+      } else { fallbackCopy(text, selected.length); }
+    };
+    function fallbackCopy(text, count) {
+      const ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); showToast(`已复制 ${count} 个景点，可直接粘贴发微信！`); } catch (e) { alert(text); }
+      document.body.removeChild(ta);
+    }
     renderCatalog();
 
-    // ====== 2. RENDER DAILY TIMELINES ======
+    // ====== 2. RENDER DAILY TIMELINES + QUICK DAY JUMP BAR ======
+    const dayJumpBar = document.getElementById("dayJumpBar");
     const daysContainer = document.getElementById("daysContainer");
     DAYS.forEach(d => {
       const color = DAY_COLORS[d.day];
+      dayJumpBar.innerHTML += `<button class="pill" onclick="jumpToDay(${d.day})">D${d.day} ${d.stay.split("（")[0].slice(0,4)}</button>`;
       const timelineHtml = d.schedule.map(([t, txt]) => `
         <div class="tl-row"><span class="tl-time">${t}</span><span class="tl-text">${txt}</span></div>
       `).join("");
@@ -836,21 +877,25 @@
         </article>
       `;
     });
+    window.jumpToDay = (dayNum) => {
+      const el = document.getElementById("day-card-" + dayNum);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
 
-    // ====== 3. RENDER WEATHER & PACKING CHECKLIST ======
+    // ====== 3. RENDER WEATHER & PACKING ======
     const WEATHER = [
-      { city: "西宁", alt: "海拔 2,295m", hi: 4, lo: -12, tip: "晴天午后舒适，早晚偏冷，室内暖气足。" },
-      { city: "青海湖 / 茶卡", alt: "海拔 3,100–3,200m", hi: 2, lo: -14, tip: "湖边风力极大，体感温度低，必须防风。" },
-      { city: "大柴旦 / 冷湖", alt: "海拔 2,780–3,170m", hi: 0, lo: -17, tip: "全线最干冷段，冷湖夜观星务必带足暖宝宝。" },
-      { city: "敦煌 / 嘉峪关", alt: "海拔 1,139–1,650m", hi: 3, lo: -12, tip: "低海拔无高反，晴天阳光足，沙漠昼夜温差大。" },
-      { city: "张掖", alt: "海拔 1,480–1,850m", hi: 2, lo: -13, tip: "干冷晴朗居多，丹霞日落时风冷需加戴帽手套。" },
-      { city: "祁连 / 门源", alt: "海拔 2,800–3,792m", hi: 0, lo: -15, tip: "山地垭口易降雪起雾，行前务必查实时路况。" }
+      { city: "西宁", alt: "2,295m", hi: 4, lo: -12, tip: "晴天午后舒适，早晚偏冷，室内暖气足。" },
+      { city: "青海湖 / 茶卡", alt: "3,100–3,200m", hi: 2, lo: -14, tip: "湖边风极强，体感温度低，必须防风。" },
+      { city: "大柴旦 / 冷湖", alt: "2,780–3,170m", hi: 0, lo: -17, tip: "全线最干冷段，冷湖夜观星多贴暖宝宝。" },
+      { city: "敦煌 / 嘉峪关", alt: "1,139–1,650m", hi: 3, lo: -12, tip: "低海拔无高反，晴天阳光足，温差大。" },
+      { city: "张掖", alt: "1,480–1,850m", hi: 2, lo: -13, tip: "干冷晴朗居多，丹霞日落风冷戴帽手套。" },
+      { city: "祁连 / 门源", alt: "2,800–3,792m", hi: 0, lo: -15, tip: "垭口易降雪起雾，行前务必查实时路况。" }
     ];
     document.getElementById("weatherGrid").innerHTML = WEATHER.map(w => {
       const hiPct = Math.max(18, Math.min(100, ((w.hi + 18) / 26) * 100));
       const loPct = Math.max(18, Math.min(100, (Math.abs(w.lo) / 20) * 100));
       return `<div class="w-card">
-        <div class="w-city">${w.city}</div><div class="w-alt">${w.alt}</div>
+        <div class="w-city">${w.city}</div><div class="w-alt">海拔 ${w.alt}</div>
         <div class="w-row"><span>白天</span><div class="w-track"><div class="w-hi" style="width:${hiPct}%"></div></div><span class="w-val" style="color:#c2410c;">${w.hi > 0 ? "+" + w.hi : w.hi}℃</span></div>
         <div class="w-row"><span>早晚</span><div class="w-track"><div class="w-lo" style="width:${loPct}%"></div></div><span class="w-val" style="color:#1d4ed8;">${w.lo}℃</span></div>
         <div class="w-tip">${w.tip}</div>
@@ -868,14 +913,14 @@
       { id: "p8", cat: "防晒保湿", title: "高保湿面霜、润唇膏、护手霜、补水面膜", sub: "大西北冬季极干，每晚厚涂保湿" },
       { id: "p9", cat: "防晒保湿", title: "鼻腔保湿喷雾或红霉素软膏", sub: "预防高原干燥导致流鼻血" },
       { id: "p10", cat: "观星保暖", title: "暖宝宝（身贴 + 足贴 + 手机贴多备）", sub: "冷湖夜拍星空贴手机背面防自动关机" },
-      { id: "p11", cat: "观星保暖", title: "三脚架 + 强光手电/头灯（红光模式佳）", sub: "冷湖拍星空长曝光必备，暗夜区勿直射他人" },
+      { id: "p11", cat: "观星保暖", title: "三脚架 + 手电/头灯（红光模式佳）", sub: "拍星空长曝光必备，暗夜区勿直射他人" },
       { id: "p12", cat: "观星保暖", title: "大容量保温杯（车上随时喝热水）", sub: "观星与戈壁长途喝口热水极幸福" },
       { id: "p13", cat: "自驾证件", title: "身份证、双方驾驶证、学生证", sub: "安检加油高频查验，2人轮换驾驶必备" },
       { id: "p14", cat: "自驾证件", title: "车载手机支架 + 多口快充 + 离线地图", sub: "提前下载青海/甘肃离线导航包" },
       { id: "p15", cat: "药品补给", title: "葡萄糖口服液、布洛芬、感冒/肠胃/晕车药", sub: "应对轻度高反与长途不适" },
       { id: "p16", cat: "药品补给", title: "饮用水、自热饭、坚果巧克力（西宁采购）", sub: "冷湖与雅丹段餐饮少，自热锅很实用" }
     ];
-    const PACK_KEY = "qinggan_2027_pack_v5";
+    const PACK_KEY = "qinggan_2027_pack_v7";
     let checkedMap = {};
     try { checkedMap = JSON.parse(localStorage.getItem(PACK_KEY) || "{}"); } catch (e) {}
     const packCats = ["全部", ...new Set(PACK_ITEMS.map(i => i.cat))];
@@ -905,7 +950,7 @@
     };
     renderChecklist();
 
-    // ====== 4. INITIALIZE LEAFLET MAP + OSRM REAL ROAD ROUTING ======
+    // ====== 4. LEAFLET MAP + REAL HIGHWAY ROUTING ======
     let map, allGroup, tempMarker;
     const dayLayers = {};
     const dayPolylines = {};
@@ -913,7 +958,7 @@
     function initMap() {
       if (typeof L === "undefined") {
         document.getElementById("map").innerHTML =
-          '<div style="padding:40px;text-align:center;color:#64748b;">地图组件加载需要联网，请检查网络后刷新页面（下方32景点备选库与时间表可正常查看）。</div>';
+          '<div style="padding:36px 20px;text-align:center;color:#64748b;font-size:13.5px;">地图需要联网加载，点击底部导航栏可随时切换其他页面。</div>';
         return;
       }
 
@@ -921,7 +966,7 @@
       L.control.scale({ metric: true, imperial: false }).addTo(map);
 
       const tileLayers = {
-        osm: L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap contributors" }),
+        osm: L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap" }),
         amap: L.tileLayer("https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}", {
           subdomains: ["1", "2", "3", "4"], maxZoom: 18, attribution: "© 高德地图"
         })
@@ -967,8 +1012,11 @@
             <div class="popup-box">
               <div class="popup-title">D${d.day} · ${s.name}</div>
               <div class="popup-meta">海拔：${s.alt} ｜ ${s.status}</div>
-              <div style="margin-bottom:8px;">${s.desc}</div>
-              <a class="xhs-btn" href="${xhsUrl(s.xhs)}" target="_blank" rel="noopener">📕 小红书看冬季实景 →</a>
+              <div>${s.desc}</div>
+              <div class="popup-btns">
+                <a class="amap-btn" href="${amapNavUrl(s.lat, s.lng, s.name)}" target="_blank" rel="noopener">🧭 高德导航</a>
+                <a class="xhs-btn" href="${xhsUrl(s.xhs)}" target="_blank" rel="noopener">📕 小红书</a>
+              </div>
             </div>
           `);
         });
@@ -996,7 +1044,7 @@
 
     async function upgradeToRealRoads() {
       const statusEl = document.getElementById("routeStatus");
-      statusEl.textContent = "正在贴合真实公路路线…";
+      statusEl.textContent = "正在贴合真实公路…";
       let snapped = 0;
       const drivingDays = DAYS.filter(d => d.osrmStops);
 
@@ -1015,12 +1063,11 @@
         } catch (e) {}
       }));
 
-      statusEl.textContent = snapped > 0 ? `已贴合真实公路 (${snapped}/${drivingDays.length}段)` : "已按公路关键途经点绘制";
+      statusEl.textContent = snapped > 0 ? `已贴合真实公路 (${snapped}/${drivingDays.length})` : "已按公路途经点绘制";
     }
 
     function selectDay(val) {
-      document.querySelectorAll(".pill").forEach(p => p.classList.toggle("active", p.dataset.day === val));
-      document.querySelectorAll(".day-card").forEach(c => c.classList.remove("highlighted"));
+      document.querySelectorAll("#dayPills .pill").forEach(p => p.classList.toggle("active", p.dataset.day === val));
       if (!map) return;
 
       if (val === "all") {
@@ -1036,12 +1083,11 @@
           }
         });
         map.fitBounds(dayLayers[dayNum].getBounds().pad(0.22));
-        const card = document.getElementById(`day-card-${dayNum}`);
-        if (card) card.classList.add("highlighted");
       }
     }
 
     window.flyToCoord = (lat, lng, name, xhsKw, desc) => {
+      switchPage("map");
       if (!map) return;
       selectDay("all");
       if (tempMarker) map.removeLayer(tempMarker);
@@ -1050,16 +1096,25 @@
       }).addTo(map).bindPopup(`
         <div class="popup-box">
           <div class="popup-title">${name}</div>
-          <div style="margin-bottom:8px;">${desc}</div>
-          <a class="xhs-btn" href="${xhsUrl(xhsKw)}" target="_blank" rel="noopener">📕 小红书看冬季实景 →</a>
+          <div>${desc}</div>
+          <div class="popup-btns">
+            <a class="amap-btn" href="${amapNavUrl(lat, lng, name)}" target="_blank" rel="noopener">🧭 高德导航</a>
+            <a class="xhs-btn" href="${xhsUrl(xhsKw)}" target="_blank" rel="noopener">📕 小红书</a>
+          </div>
         </div>
       `);
-      document.getElementById("map-section").scrollIntoView({ behavior: "smooth" });
       setTimeout(() => {
+        map.invalidateSize();
         map.setView([lat, lng], 9, { animate: true });
         tempMarker.openPopup();
-      }, 350);
+      }, 150);
     };
+
+    // Init page from URL hash if present
+    const initHash = (location.hash || "").replace("#", "");
+    if (["map", "catalog", "itinerary", "packing", "tips"].includes(initHash)) {
+      switchPage(initHash, true);
+    }
 
     if (typeof L !== "undefined") {
       initMap();
