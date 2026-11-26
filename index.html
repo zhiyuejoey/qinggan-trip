@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="青甘冬季攻略" />
   <title>2027寒假青甘大环线 · 8天7晚冬季自驾攻略</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
   <style>
     :root {
       --bg: #faf8f4;
@@ -72,11 +72,7 @@
       transition: all 0.15s;
     }
     .nav-tab:hover { border-color: var(--green); color: var(--green); }
-    .nav-tab.active {
-      background: var(--green);
-      border-color: var(--green);
-      color: #fff;
-    }
+    .nav-tab.active { background: var(--green); border-color: var(--green); color: #fff; }
 
     /* Mobile Bottom Tab Bar */
     .mobile-bottom-nav {
@@ -122,7 +118,7 @@
     h2 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
     .sec-sub { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
 
-    /* Hero Strip (Compact) */
+    /* Hero */
     .hero-card {
       background: #fff;
       border: 1px solid var(--border);
@@ -148,7 +144,6 @@
     .kpi-label { font-size: 11px; color: var(--muted); }
     .kpi-val { font-size: 14.5px; font-weight: 800; margin-top: 2px; }
 
-    /* Horizontal scroll strip */
     .scroll-strip {
       display: flex;
       gap: 7px;
@@ -217,14 +212,16 @@
       display: inline-flex; align-items: center; gap: 4px;
       background: var(--xhs-soft); color: var(--xhs) !important;
       border: 1px solid #fecdd3; padding: 5px 10px; border-radius: 999px;
-      font-size: 12px; font-weight: 700; white-space: nowrap;
+      font-size: 12px; font-weight: 700; white-space: nowrap; cursor: pointer;
     }
+    .xhs-btn:active { background: #ffe4e6; }
     .amap-btn {
       display: inline-flex; align-items: center; gap: 4px;
       background: var(--nav-blue-soft); color: var(--nav-blue) !important;
       border: 1px solid #bae6fd; padding: 5px 10px; border-radius: 999px;
-      font-size: 12px; font-weight: 700; white-space: nowrap;
+      font-size: 12px; font-weight: 700; white-space: nowrap; cursor: pointer;
     }
+    .amap-btn:active { background: #e0f2fe; }
 
     /* Stargazing Banner */
     .star-banner {
@@ -306,7 +303,6 @@
     .w-tip { font-size: 12px; color: var(--muted); margin-top: 5px; }
 
     .panel { padding: 16px; }
-    .panel h3 { font-size: 17px; font-weight: 800; margin-bottom: 10px; }
     .c-tab { border: 1px solid var(--border); background: #fff; padding: 6px 10px; border-radius: 8px; font-size: 12.5px; cursor: pointer; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
     .c-tab.active { background: var(--green); color: #fff; border-color: var(--green); }
     .progress-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 12.5px; color: var(--muted); }
@@ -349,7 +345,6 @@
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    /* Mobile Layout */
     @media (max-width: 768px) {
       .desktop-tabs { display: none; }
       .mobile-bottom-nav { display: grid; }
@@ -361,7 +356,6 @@
   </style>
 </head>
 <body>
-  <!-- Desktop Top Nav Bar -->
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">🌌 青甘大环线 · 8天7晚冬季攻略</div>
@@ -379,9 +373,9 @@
     <!-- PAGE 1: MAP -->
     <div class="page-view active" id="page-map">
       <div class="hero-card">
-        <span class="hero-tag">2027年1月底 · 2人自驾 · D1 18:00前西宁取车 · 冷湖观星 + 黑独山</span>
+        <span class="hero-tag">国内免VPN直连 · 手机直跳小红书App + 高德导航</span>
         <h1>青甘大环线 8天7晚 冬季自驾地图</h1>
-        <p>D4 宿冷湖观星零回头路，D5 黑独山+鸣沙山日落，D6 莫高窟+宿嘉峪关，D7 仅开 230km 宿张掖。点击下方导航栏可随时切换 5 个独立功能页。</p>
+        <p>D4 宿冷湖观星零回头路，D5 黑独山+鸣沙山日落，D6 莫高窟+宿嘉峪关，D7 仅开 230km 宿张掖。</p>
         <div class="kpi-grid">
           <div class="kpi"><div class="kpi-label">总行程</div><div class="kpi-val">8天7晚（零回头）</div></div>
           <div class="kpi"><div class="kpi-label">观星夜</div><div class="kpi-val">D4 冷湖暗夜区</div></div>
@@ -394,8 +388,8 @@
         <div class="scroll-strip" id="dayPills" style="max-width:100%;"></div>
         <div class="map-tools">
           <span class="route-status" id="routeStatus">公路路线已加载</span>
-          <button class="layer-btn active" data-layer="osm">OSM地图</button>
-          <button class="layer-btn" data-layer="amap">高德中文</button>
+          <button class="layer-btn active" data-layer="amap">高德中文</button>
+          <button class="layer-btn" data-layer="osm">OSM地图</button>
         </div>
       </div>
 
@@ -415,7 +409,7 @@
         <div class="star-grid">
           <div class="star-item">
             <strong>1. 避开 1 月 22 日超级满月</strong>
-            2027年1月22日为满月，<strong>1月29日为下弦月</strong>。建议把住冷湖排在 <strong>1月28日及以后</strong>，前半夜无月光干扰，冬季猎户座与繁星最清澈。
+            2027年1月22日为满月，<strong>1月29日为下弦月</strong>。把住冷湖排在 <strong>1月28日及以后</strong>，前半夜无月光干扰，冬季猎户座与繁星最清澈。
           </div>
           <div class="star-item">
             <strong>2. 住冷湖镇暖气酒店</strong>
@@ -432,7 +426,7 @@
     <!-- PAGE 2: 32-SPOT CATALOG -->
     <div class="page-view" id="page-catalog">
       <h2>🧭 沿线 32 景点备选库</h2>
-      <p class="sec-sub">点「📕 小红书」看冬季实拍，点「🧭 高德导航」直接唤起导航，勾选想去的点后一键复制发微信</p>
+      <p class="sec-sub">手机点「📕 小红书」直跳小红书 App 搜索页（同时复制关键词备用）；点「🧭 高德导航」直接唤起高德驾车导航</p>
       <div class="catalog-card">
         <div class="cat-toolbar">
           <div class="scroll-strip" id="catalogTabs" style="max-width:100%;"></div>
@@ -515,7 +509,6 @@
     </div>
   </main>
 
-  <!-- Mobile Bottom Page-Switcher Nav Bar -->
   <nav class="mobile-bottom-nav" aria-label="底部页面导航">
     <button class="m-tab active" data-page="map" onclick="switchPage('map')"><span class="ico">🗺️</span><span>地图</span></button>
     <button class="m-tab" data-page="catalog" onclick="switchPage('catalog')"><span class="ico">🧭</span><span>32景点</span></button>
@@ -526,11 +519,35 @@
 
   <div class="toast" id="toast">已复制</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
   <script>
-    const xhsUrl = (kw) => `https://www.xiaohongshu.com/search_result?keyword=${encodeURIComponent(kw)}`;
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
     const amapNavUrl = (lat, lng, name) =>
       `https://uri.amap.com/navigation?to=${lng},${lat},${encodeURIComponent(name)}&mode=car&policy=1&src=qinggan2027&callnative=1`;
+
+    function copyTextSilent(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(() => {});
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+    }
+
+    // Smart Xiaohongshu App deep link (mobile) + Web search fallback (desktop)
+    window.openXhs = (kw) => {
+      copyTextSilent(kw);
+      if (isMobile) {
+        showToast("正在唤起小红书 App（已复制关键词备用）");
+        window.location.href = `xhsdiscover://search/result?keyword=${encodeURIComponent(kw)}`;
+      } else {
+        window.open(`https://www.xiaohongshu.com/search_result?keyword=${encodeURIComponent(kw)}&source=web_search_result_notes`, "_blank", "noopener");
+      }
+    };
 
     function showToast(msg) {
       const t = document.getElementById("toast");
@@ -540,19 +557,13 @@
       window._toastTimer = setTimeout(() => t.classList.remove("show"), 2600);
     }
 
-    // ====== PAGE SWITCHING CONTROLLER ======
-    let currentPage = "map";
+    // Page Switching
     window.switchPage = (pageId, skipScroll = false) => {
       if (!document.getElementById("page-" + pageId)) pageId = "map";
-      currentPage = pageId;
-
       document.querySelectorAll(".page-view").forEach(el => el.classList.toggle("active", el.id === "page-" + pageId));
       document.querySelectorAll(".nav-tab, .m-tab").forEach(btn => btn.classList.toggle("active", btn.dataset.page === pageId));
-
       if (!skipScroll) window.scrollTo({ top: 0, behavior: "instant" });
-      if (pageId === "map" && map) {
-        setTimeout(() => map.invalidateSize(), 60);
-      }
+      if (pageId === "map" && map) setTimeout(() => map.invalidateSize(), 60);
       try { history.replaceState(null, "", "#" + pageId); } catch (e) {}
     };
 
@@ -564,46 +575,46 @@
     };
 
     const CATALOG = [
-      { id: "s1", seg: "西宁&青海湖", day: 1, name: "东关清真大寺 / 下南关街", status: "正常开放", tag: "open", defaultPick: true, lat: 36.615, lng: 101.792, desc: "西宁市区逛吃必去，手抓羊肉、甜醅子奶茶、老酸奶。", xhs: "西宁 下南关街 东关清真大寺 冬季" },
-      { id: "s2", seg: "西宁&青海湖", day: 1, name: "青海藏文化博物院", status: "室内暖和", tag: "open", defaultPick: false, lat: 36.665, lng: 101.760, desc: "看世界最长彩绘唐卡与藏医药文化，适合怕冷备选。", xhs: "青海藏文化博物院 攻略" },
-      { id: "s3", seg: "西宁&青海湖", day: 2, name: "塔尔寺", status: "正常开放", tag: "opt", defaultPick: false, lat: 36.491, lng: 101.570, desc: "藏传佛教格鲁派名寺，酥油花/壁画/堆绣（预留1.5h）。", xhs: "塔尔寺 冬季 攻略" },
-      { id: "s4", seg: "西宁&青海湖", day: 2, name: "拉脊山", status: "免费/雪厚", tag: "opt", defaultPick: false, lat: 36.365, lng: 101.470, desc: "高海拔经幡垭口，冬季积雪厚，绕行可选。", xhs: "拉脊山 冬天 雪景" },
-      { id: "s5", seg: "西宁&青海湖", day: 2, name: "日月山 & 倒淌河", status: "沿途打卡", tag: "open", defaultPick: true, lat: 36.445, lng: 101.075, desc: "青藏高原农牧分界垭口，顺路停20分钟拍照。", xhs: "日月山 冬天 风景" },
-      { id: "s6", seg: "西宁&青海湖", day: 2, name: "青海湖二郎剑景区", status: "淡季优惠", tag: "open", defaultPick: true, lat: 36.584, lng: 100.472, desc: "1月底必看限定蓝冰、冰推奇观与越冬大天鹅。", xhs: "青海湖 二郎剑 1月 蓝冰" },
-      { id: "s7", seg: "西宁&青海湖", day: 2, name: "青海湖断崖 / 仙女湾", status: "视雪况", tag: "opt", defaultPick: false, lat: 37.020, lng: 100.120, desc: "北岸小众观湖与天鹅湿地（黑马河冬季常闭）。", xhs: "青海湖 断崖 仙女湾 冬天" },
+      { id: "s1", seg: "西宁&青海湖", day: 1, name: "东关清真大寺 / 下南关街", status: "正常开放", tag: "open", defaultPick: true, lat: 36.615, lng: 101.792, desc: "西宁市区逛吃必去，手抓羊肉、甜醅子奶茶、老酸奶。", xhs: "西宁下南关街冬季美食" },
+      { id: "s2", seg: "西宁&青海湖", day: 1, name: "青海藏文化博物院", status: "室内暖和", tag: "open", defaultPick: false, lat: 36.665, lng: 101.760, desc: "看世界最长彩绘唐卡与藏医药文化，适合怕冷备选。", xhs: "青海藏文化博物院攻略" },
+      { id: "s3", seg: "西宁&青海湖", day: 2, name: "塔尔寺", status: "正常开放", tag: "opt", defaultPick: false, lat: 36.491, lng: 101.570, desc: "藏传佛教格鲁派名寺，酥油花/壁画/堆绣（预留1.5h）。", xhs: "塔尔寺冬季攻略" },
+      { id: "s4", seg: "西宁&青海湖", day: 2, name: "拉脊山", status: "免费/雪厚", tag: "opt", defaultPick: false, lat: 36.365, lng: 101.470, desc: "高海拔经幡垭口，冬季积雪厚，绕行可选。", xhs: "拉脊山冬天雪景" },
+      { id: "s5", seg: "西宁&青海湖", day: 2, name: "日月山 & 倒淌河", status: "沿途打卡", tag: "open", defaultPick: true, lat: 36.445, lng: 101.075, desc: "青藏高原农牧分界垭口，顺路停20分钟拍照。", xhs: "日月山冬天风景" },
+      { id: "s6", seg: "西宁&青海湖", day: 2, name: "青海湖二郎剑景区", status: "淡季优惠", tag: "open", defaultPick: true, lat: 36.584, lng: 100.472, desc: "1月底必看限定蓝冰、冰推奇观与越冬大天鹅。", xhs: "青海湖二郎剑1月蓝冰" },
+      { id: "s7", seg: "西宁&青海湖", day: 2, name: "青海湖断崖 / 仙女湾", status: "视雪况", tag: "opt", defaultPick: false, lat: 37.020, lng: 100.120, desc: "北岸小众观湖与天鹅湿地（黑马河冬季常闭）。", xhs: "青海湖断崖仙女湾冬天" },
 
-      { id: "s8", seg: "茶卡&柴达木", day: 2, name: "茶卡盐湖（天空之镜）", status: "淡季常免票", tag: "open", defaultPick: true, lat: 36.785, lng: 99.076, desc: "冬日人少包场，雪山倒映冰面如镜面星球。", xhs: "茶卡盐湖 冬天 1月 实拍" },
-      { id: "s9", seg: "茶卡&柴达木", day: 2, name: "茶卡壹号·盐湖景区", status: "正常开放", tag: "opt", defaultPick: false, lat: 36.750, lng: 99.130, desc: "与天空之镜二选一，设施较新。", xhs: "茶卡壹号 冬天 对比 天空之镜" },
-      { id: "s10", seg: "茶卡&柴达木", day: 3, name: "可鲁克湖 & 托素湖(外星人遗址)", status: "可选", tag: "opt", defaultPick: false, lat: 37.285, lng: 96.910, desc: "德令哈附近一淡一咸双生湖，枯黄芦苇配冰面。", xhs: "可鲁克湖 外星人遗址 冬天" },
-      { id: "s11", seg: "茶卡&柴达木", day: 3, name: "小柴旦湖", status: "免费路边", tag: "open", defaultPick: true, lat: 37.540, lng: 95.520, desc: "顺路途经的高原蓝绿湖泊，雪山倒影极美。", xhs: "小柴旦湖 冬天" },
-      { id: "s12", seg: "茶卡&柴达木", day: 3, name: "察尔汗盐湖", status: "淡季半价", tag: "opt", defaultPick: false, lat: 36.822, lng: 95.280, desc: "中国最大盐湖，苹果绿盐池与网红生命树（多绕约130km）。", xhs: "察尔汗盐湖 冬天 1月" },
-      { id: "s13", seg: "茶卡&柴达木", day: 3, name: "大柴旦翡翠湖", status: "免大门票", tag: "open", defaultPick: true, lat: 37.855, lng: 95.356, desc: "祖母绿与蒂芙尼蓝盐坑，雪后通透度拉满。", xhs: "大柴旦翡翠湖 冬天 1月" },
+      { id: "s8", seg: "茶卡&柴达木", day: 2, name: "茶卡盐湖（天空之镜）", status: "淡季常免票", tag: "open", defaultPick: true, lat: 36.785, lng: 99.076, desc: "冬日人少包场，雪山倒映冰面如镜面星球。", xhs: "茶卡盐湖冬天1月实拍" },
+      { id: "s9", seg: "茶卡&柴达木", day: 2, name: "茶卡壹号·盐湖景区", status: "正常开放", tag: "opt", defaultPick: false, lat: 36.750, lng: 99.130, desc: "与天空之镜二选一，设施较新。", xhs: "茶卡壹号冬天" },
+      { id: "s10", seg: "茶卡&柴达木", day: 3, name: "可鲁克湖 & 托素湖(外星人遗址)", status: "可选", tag: "opt", defaultPick: false, lat: 37.285, lng: 96.910, desc: "德令哈附近一淡一咸双生湖，枯黄芦苇配冰面。", xhs: "可鲁克湖外星人遗址冬天" },
+      { id: "s11", seg: "茶卡&柴达木", day: 3, name: "小柴旦湖", status: "免费路边", tag: "open", defaultPick: true, lat: 37.540, lng: 95.520, desc: "顺路途经的高原蓝绿湖泊，雪山倒影极美。", xhs: "小柴旦湖冬天" },
+      { id: "s12", seg: "茶卡&柴达木", day: 3, name: "察尔汗盐湖", status: "淡季半价", tag: "opt", defaultPick: false, lat: 36.822, lng: 95.280, desc: "中国最大盐湖，苹果绿盐池与网红生命树（多绕约130km）。", xhs: "察尔汗盐湖冬天1月" },
+      { id: "s13", seg: "茶卡&柴达木", day: 3, name: "大柴旦翡翠湖", status: "免大门票", tag: "open", defaultPick: true, lat: 37.855, lng: 95.356, desc: "祖母绿与蒂芙尼蓝盐坑，雪后通透度拉满。", xhs: "大柴旦翡翠湖冬天1月" },
 
-      { id: "s14", seg: "雅丹&冷湖观星", day: 4, name: "G315 网红 U 型公路", status: "免费路边", tag: "open", defaultPick: true, lat: 37.685, lng: 94.120, desc: "波浪荒漠天路（仅在停车带拍照，严禁站路中）。", xhs: "315国道 U型公路 冬天" },
-      { id: "s15", seg: "雅丹&冷湖观星", day: 4, name: "东台吉乃尔湖", status: "免费观景", tag: "open", defaultPick: true, lat: 37.492, lng: 93.920, desc: "路边远观蒂芙尼蓝盐湖，严禁开车上盐滩。", xhs: "东台吉乃尔湖 冬天" },
-      { id: "s16", seg: "雅丹&冷湖观星", day: 4, name: "乌素特水上雅丹", status: "淡季半价", tag: "open", defaultPick: true, lat: 37.819, lng: 93.346, desc: "世界罕见水上雅丹，冬日冰湖配荒漠。", xhs: "水上雅丹 冬天 1月" },
-      { id: "s17", seg: "雅丹&冷湖观星", day: 4, name: "西台吉乃尔湖（双色湖）", status: "免费途经", tag: "open", defaultPick: true, lat: 37.750, lng: 93.380, desc: "公路穿湖而过，一侧蓝一侧绿，去冷湖顺路看。", xhs: "西台吉乃尔湖 冬天" },
-      { id: "s18", seg: "雅丹&冷湖观星", day: 4, name: "火星一号公路 & 俄博梁雅丹", status: "搓板路/四驱", tag: "warn", defaultPick: false, lat: 38.450, lng: 93.120, desc: "极似火星地表的无人区雅丹（3/4搓板路，普通SUV慎入）。", xhs: "火星一号公路 俄博梁 冬天 路况" },
-      { id: "s19", seg: "雅丹&冷湖观星", day: 4, name: "冷湖暗夜星空 / 赛什腾山天文台", status: "观星核心", tag: "star", defaultPick: true, lat: 38.740, lng: 93.340, desc: "东半球顶级暗夜保护区，避开1月22日满月效果震撼。", xhs: "冷湖 冬天 观星 星空 攻略" },
-      { id: "s20", seg: "雅丹&冷湖观星", day: 5, name: "冷湖石油小镇遗址", status: "免费开放", tag: "open", defaultPick: true, lat: 38.820, lng: 93.380, desc: "真实废弃的50年代石油基地，比阿克塞更原始。", xhs: "冷湖石油小镇 冬天" },
-      { id: "s21", seg: "雅丹&冷湖观星", day: 5, name: "黑独山 & 胭脂山", status: "免票/景交车", tag: "open", defaultPick: true, lat: 38.940, lng: 93.450, desc: "黑白水墨雅丹与赤红胭脂山，距冷湖镇仅约20分钟！", xhs: "黑独山 胭脂山 冬天 1月 实拍" },
-      { id: "s22", seg: "雅丹&冷湖观星", day: 4, name: "南八仙雅丹魔鬼城", status: "不顺路可选", tag: "opt", defaultPick: false, lat: 38.070, lng: 94.380, desc: "柴达木密集雅丹群（住冷湖不走大柴旦回头路，可舍弃）。", xhs: "南八仙雅丹 冬天" },
+      { id: "s14", seg: "雅丹&冷湖观星", day: 4, name: "G315 网红 U 型公路", status: "免费路边", tag: "open", defaultPick: true, lat: 37.685, lng: 94.120, desc: "波浪荒漠天路（仅在停车带拍照，严禁站路中）。", xhs: "315国道U型公路冬天" },
+      { id: "s15", seg: "雅丹&冷湖观星", day: 4, name: "东台吉乃尔湖", status: "免费观景", tag: "open", defaultPick: true, lat: 37.492, lng: 93.920, desc: "路边远观蒂芙尼蓝盐湖，严禁开车上盐滩。", xhs: "东台吉乃尔湖冬天" },
+      { id: "s16", seg: "雅丹&冷湖观星", day: 4, name: "乌素特水上雅丹", status: "淡季半价", tag: "open", defaultPick: true, lat: 37.819, lng: 93.346, desc: "世界罕见水上雅丹，冬日冰湖配荒漠。", xhs: "水上雅丹冬天1月" },
+      { id: "s17", seg: "雅丹&冷湖观星", day: 4, name: "西台吉乃尔湖（双色湖）", status: "免费途经", tag: "open", defaultPick: true, lat: 37.750, lng: 93.380, desc: "公路穿湖而过，一侧蓝一侧绿，去冷湖顺路看。", xhs: "西台吉乃尔湖冬天" },
+      { id: "s18", seg: "雅丹&冷湖观星", day: 4, name: "火星一号公路 & 俄博梁雅丹", status: "搓板路/四驱", tag: "warn", defaultPick: false, lat: 38.450, lng: 93.120, desc: "极似火星地表的无人区雅丹（3/4搓板路，普通SUV慎入）。", xhs: "火星一号公路俄博梁冬天路况" },
+      { id: "s19", seg: "雅丹&冷湖观星", day: 4, name: "冷湖暗夜星空 / 赛什腾山天文台", status: "观星核心", tag: "star", defaultPick: true, lat: 38.740, lng: 93.340, desc: "东半球顶级暗夜保护区，避开1月22日满月效果震撼。", xhs: "冷湖冬天观星星空攻略" },
+      { id: "s20", seg: "雅丹&冷湖观星", day: 5, name: "冷湖石油小镇遗址", status: "免费开放", tag: "open", defaultPick: true, lat: 38.820, lng: 93.380, desc: "真实废弃的50年代石油基地，比阿克塞更原始。", xhs: "冷湖石油小镇冬天" },
+      { id: "s21", seg: "雅丹&冷湖观星", day: 5, name: "黑独山 & 胭脂山", status: "免票/景交车", tag: "open", defaultPick: true, lat: 38.940, lng: 93.450, desc: "黑白水墨雅丹与赤红胭脂山，距冷湖镇仅约20分钟！", xhs: "黑独山胭脂山冬天1月实拍" },
+      { id: "s22", seg: "雅丹&冷湖观星", day: 4, name: "南八仙雅丹魔鬼城", status: "不顺路可选", tag: "opt", defaultPick: false, lat: 38.070, lng: 94.380, desc: "柴达木密集雅丹群（住冷湖不走大柴旦回头路，可舍弃）。", xhs: "南八仙雅丹冬天" },
 
-      { id: "s23", seg: "阿克塞&敦煌", day: 5, name: "阿克塞博罗转井石油小镇", status: "正常开放", tag: "opt", defaultPick: false, lat: 39.618, lng: 94.335, desc: "《九层妖塔》取景地（上午看了冷湖遗址可跳过）。", xhs: "阿克塞石油小镇 冬天" },
-      { id: "s24", seg: "阿克塞&敦煌", day: 5, name: "敦煌丝路遗产城", status: "正常开放", tag: "opt", defaultPick: false, lat: 40.145, lng: 94.490, desc: "戈壁古建旅拍基地，适合汉服/异域写真。", xhs: "敦煌 丝路遗产城 冬天" },
-      { id: "s25", seg: "阿克塞&敦煌", day: 5, name: "阳关 / 玉门关 / 敦煌雅丹(西线)", status: "淡季半价", tag: "opt", defaultPick: false, lat: 39.920, lng: 94.060, desc: "敦煌西线需半天至一天，8天行程一般时间不够。", xhs: "敦煌西线 阳关 玉门关 冬天" },
-      { id: "s26", seg: "阿克塞&敦煌", day: 5, name: "鸣沙山月牙泉", status: "淡季半价", tag: "open", defaultPick: true, lat: 40.087, lng: 94.670, desc: "D5下午15:30入园（18:00停检）看沙漠日落与雪落沙丘。", xhs: "鸣沙山月牙泉 冬天 雪景 日落" },
-      { id: "s27", seg: "阿克塞&敦煌", day: 6, name: "莫高窟", status: "淡季半价+10窟", tag: "open", defaultPick: true, lat: 40.036, lng: 94.809, desc: "D6 09:00最早场次，淡季人少且比旺季多看2个洞窟。", xhs: "敦煌莫高窟 冬天 1月 10个窟" },
-      { id: "s28", seg: "阿克塞&敦煌", day: 5, name: "敦煌博物馆 & 沙洲夜市", status: "免费/夜市", tag: "open", defaultPick: true, lat: 40.142, lng: 94.662, desc: "室内看汉简彩塑，晚吃驴肉黄面和胡羊焖饼。", xhs: "敦煌博物馆 沙洲夜市 冬天" },
+      { id: "s23", seg: "阿克塞&敦煌", day: 5, name: "阿克塞博罗转井石油小镇", status: "正常开放", tag: "opt", defaultPick: false, lat: 39.618, lng: 94.335, desc: "《九层妖塔》取景地（上午看了冷湖遗址可跳过）。", xhs: "阿克塞石油小镇冬天" },
+      { id: "s24", seg: "阿克塞&敦煌", day: 5, name: "敦煌丝路遗产城", status: "正常开放", tag: "opt", defaultPick: false, lat: 40.145, lng: 94.490, desc: "戈壁古建旅拍基地，适合汉服/异域写真。", xhs: "敦煌丝路遗产城冬天" },
+      { id: "s25", seg: "阿克塞&敦煌", day: 5, name: "阳关 / 玉门关 / 敦煌雅丹(西线)", status: "淡季半价", tag: "opt", defaultPick: false, lat: 39.920, lng: 94.060, desc: "敦煌西线需半天至一天，8天行程一般时间不够。", xhs: "敦煌西线阳关玉门关冬天" },
+      { id: "s26", seg: "阿克塞&敦煌", day: 5, name: "鸣沙山月牙泉", status: "淡季半价", tag: "open", defaultPick: true, lat: 40.087, lng: 94.670, desc: "D5下午15:30入园（18:00停检）看沙漠日落与雪落沙丘。", xhs: "鸣沙山月牙泉冬天雪景日落" },
+      { id: "s27", seg: "阿克塞&敦煌", day: 6, name: "莫高窟", status: "淡季半价+10窟", tag: "open", defaultPick: true, lat: 40.036, lng: 94.809, desc: "D6 09:00最早场次，淡季人少且比旺季多看2个洞窟。", xhs: "敦煌莫高窟冬天1月10个窟" },
+      { id: "s28", seg: "阿克塞&敦煌", day: 5, name: "敦煌博物馆 & 沙洲夜市", status: "免费/夜市", tag: "open", defaultPick: true, lat: 40.142, lng: 94.662, desc: "室内看汉简彩塑，晚吃驴肉黄面和胡羊焖饼。", xhs: "敦煌博物馆沙洲夜市冬天" },
 
-      { id: "s29", seg: "河西走廊", day: 6, name: "瓜州大地之子 & 无界 & 汉武雄风", status: "免费开放", tag: "open", defaultPick: true, lat: 40.530, lng: 95.780, desc: "戈壁巨型雕塑群，D6下午下高速即达拍30分钟。", xhs: "瓜州 大地之子 无界 冬天" },
-      { id: "s30", seg: "河西走廊", day: 7, name: "嘉峪关关城 & 悬壁长城 & 第一墩", status: "淡季优惠", tag: "open", defaultPick: true, lat: 39.802, lng: 98.216, desc: "天下第一雄关，冬季背靠祁连雪山极气派。", xhs: "嘉峪关关城 冬天 雪山" },
-      { id: "s31", seg: "河西走廊", day: 7, name: "张掖七彩丹霞", status: "淡季开放", tag: "open", defaultPick: true, lat: 38.926, lng: 100.056, desc: "红岩覆薄雪配冬日夕阳，2号/4号观景台必去。", xhs: "张掖七彩丹霞 冬天 1月 雪景" },
-      { id: "s32", seg: "河西走廊", day: 7, name: "冰沟丹霞 / 大佛寺 / 马蹄寺 / 平山湖", status: "正常开放", tag: "opt", defaultPick: false, lat: 38.960, lng: 100.220, desc: "张掖深度备选：宫殿丹霞、西夏卧佛、绝壁石窟或大峡谷。", xhs: "张掖 冰沟丹霞 马蹄寺 平山湖大峡谷 冬天" },
+      { id: "s29", seg: "河西走廊", day: 6, name: "瓜州大地之子 & 无界 & 汉武雄风", status: "免费开放", tag: "open", defaultPick: true, lat: 40.530, lng: 95.780, desc: "戈壁巨型雕塑群，D6下午下高速即达拍30分钟。", xhs: "瓜州大地之子无界冬天" },
+      { id: "s30", seg: "河西走廊", day: 7, name: "嘉峪关关城 & 悬壁长城 & 第一墩", status: "淡季优惠", tag: "open", defaultPick: true, lat: 39.802, lng: 98.216, desc: "天下第一雄关，冬季背靠祁连雪山极气派。", xhs: "嘉峪关关城冬天雪山" },
+      { id: "s31", seg: "河西走廊", day: 7, name: "张掖七彩丹霞", status: "淡季开放", tag: "open", defaultPick: true, lat: 38.926, lng: 100.056, desc: "红岩覆薄雪配冬日夕阳，2号/4号观景台必去。", xhs: "张掖七彩丹霞冬天1月雪景" },
+      { id: "s32", seg: "河西走廊", day: 7, name: "冰沟丹霞 / 大佛寺 / 马蹄寺 / 平山湖", status: "正常开放", tag: "opt", defaultPick: false, lat: 38.960, lng: 100.220, desc: "张掖深度备选：宫殿丹霞、西夏卧佛、绝壁石窟或大峡谷。", xhs: "张掖冰沟丹霞马蹄寺冬天" },
 
-      { id: "s33", seg: "祁连&门源", day: 8, name: "扁都口 & G227 祁连山草原", status: "免费/查雪况", tag: "warn", defaultPick: true, lat: 38.230, lng: 100.890, desc: "中国最美高原国道，冬季草原变苍茫雪原。", xhs: "G227 扁都口 祁连草原 冬天" },
-      { id: "s34", seg: "祁连&门源", day: 8, name: "祁连卓尔山 & 阿柔大寺", status: "可选/视雪况", tag: "opt", defaultPick: false, lat: 38.180, lng: 100.240, desc: "远望牛心山雪峰与祁连最大藏传寺院。", xhs: "祁连 卓尔山 阿柔大寺 冬天 1月" },
-      { id: "s35", seg: "祁连&门源", day: 8, name: "岗什卡雪峰 & 门源 & 达坂山", status: "免费远观", tag: "open", defaultPick: true, lat: 37.376, lng: 101.622, desc: "5,254m 雪峰配冬日雾凇与达坂山盘山雪路。", xhs: "岗什卡雪峰 门源 达坂山 冬天" }
+      { id: "s33", seg: "祁连&门源", day: 8, name: "扁都口 & G227 祁连山草原", status: "免费/查雪况", tag: "warn", defaultPick: true, lat: 38.230, lng: 100.890, desc: "中国最美高原国道，冬季草原变苍茫雪原。", xhs: "G227扁都口祁连草原冬天" },
+      { id: "s34", seg: "祁连&门源", day: 8, name: "祁连卓尔山 & 阿柔大寺", status: "可选/视雪况", tag: "opt", defaultPick: false, lat: 38.180, lng: 100.240, desc: "远望牛心山雪峰与祁连最大藏传寺院。", xhs: "祁连卓尔山阿柔大寺冬天" },
+      { id: "s35", seg: "祁连&门源", day: 8, name: "岗什卡雪峰 & 门源 & 达坂山", status: "免费远观", tag: "open", defaultPick: true, lat: 37.376, lng: 101.622, desc: "5,254m 雪峰配冬日雾凇与达坂山盘山雪路。", xhs: "岗什卡雪峰门源达坂山冬天" }
     ];
 
     const DAYS = [
@@ -620,9 +631,9 @@
         note: "中川机场到西宁需在兰州西站同站换乘，预留 30–40 分钟缓冲，18:00 前取车很从容。",
         waypoints: [[36.515,103.621],[36.280,103.680],[36.065,103.750],[36.165,103.410],[36.340,102.835],[36.480,102.405],[36.505,102.105],[36.621,101.810]],
         mapLabels: [
-          { name: "兰州中川机场", lat: 36.515, lng: 103.621, alt: "1,948m", status: "中转起点", desc: "乘中川城际至兰州西站。", xhs: "兰州中川机场 换乘 西宁 高铁" },
-          { name: "兰州西站", lat: 36.065, lng: 103.750, alt: "1,530m", status: "同站换乘", desc: "换乘兰新高铁直达西宁站。", xhs: "兰州西站 换乘 西宁 高铁" },
-          { name: "西宁", lat: 36.621, lng: 101.810, alt: "2,295m", status: "18:00前取车", desc: "取车验车、晚逛下南关街。", xhs: "西宁 租车 青甘大环线 冬季" }
+          { name: "兰州中川机场", lat: 36.515, lng: 103.621, alt: "1,948m", status: "中转起点", desc: "乘中川城际至兰州西站。", xhs: "兰州中川机场换乘西宁高铁" },
+          { name: "兰州西站", lat: 36.065, lng: 103.750, alt: "1,530m", status: "同站换乘", desc: "换乘兰新高铁直达西宁站。", xhs: "兰州西站换乘西宁高铁" },
+          { name: "西宁", lat: 36.621, lng: 101.810, alt: "2,295m", status: "18:00前取车", desc: "取车验车、晚逛下南关街。", xhs: "西宁租车青甘大环线冬季" }
         ]
       },
       {
@@ -639,8 +650,8 @@
         waypoints: [[36.621,101.810],[36.665,101.480],[36.680,101.250],[36.445,101.075],[36.455,100.985],[36.565,100.750],[36.584,100.472],[36.620,100.120],[36.730,99.780],[36.745,99.580],[36.785,99.076]],
         osrmStops: [[36.621,101.810],[36.445,101.075],[36.584,100.472],[36.785,99.076]],
         mapLabels: [
-          { name: "青海湖二郎剑", lat: 36.584, lng: 100.472, alt: "3,200m", status: "淡季优惠", desc: "1月底蓝冰与越冬大天鹅。", xhs: "青海湖 二郎剑 1月 蓝冰" },
-          { name: "茶卡盐湖", lat: 36.785, lng: 99.076, alt: "3,059m", status: "淡季常免票", desc: "雪山倒映盐湖，冬日人少。", xhs: "茶卡盐湖 冬天 1月 实拍" }
+          { name: "青海湖二郎剑", lat: 36.584, lng: 100.472, alt: "3,200m", status: "淡季优惠", desc: "1月底蓝冰与越冬大天鹅。", xhs: "青海湖二郎剑1月蓝冰" },
+          { name: "茶卡盐湖", lat: 36.785, lng: 99.076, alt: "3,059m", status: "淡季常免票", desc: "雪山倒映盐湖，冬日人少。", xhs: "茶卡盐湖冬天1月实拍" }
         ]
       },
       {
@@ -658,8 +669,8 @@
         osrmStops: [[36.785,99.076],[37.369,97.361],[37.855,95.356]],
         optionalPath: [[37.540,95.620],[37.150,95.420],[36.822,95.280],[37.540,95.620]],
         mapLabels: [
-          { name: "察尔汗盐湖(可选)", lat: 36.822, lng: 95.280, alt: "2,670m", status: "可选绕行", opt: true, desc: "苹果绿盐池与生命树。", xhs: "察尔汗盐湖 冬天 1月" },
-          { name: "大柴旦 / 翡翠湖", lat: 37.855, lng: 95.356, alt: "3,148m", status: "免大门票", desc: "祖母绿与蒂芙尼蓝盐坑。", xhs: "大柴旦翡翠湖 冬天 1月" }
+          { name: "察尔汗盐湖(可选)", lat: 36.822, lng: 95.280, alt: "2,670m", status: "可选绕行", opt: true, desc: "苹果绿盐池与生命树。", xhs: "察尔汗盐湖冬天1月" },
+          { name: "大柴旦 / 翡翠湖", lat: 37.855, lng: 95.356, alt: "3,148m", status: "免大门票", desc: "祖母绿与蒂芙尼蓝盐坑。", xhs: "大柴旦翡翠湖冬天1月" }
         ]
       },
       {
@@ -677,8 +688,8 @@
         osrmStops: [[37.855,95.356],[37.685,94.120],[37.819,93.346],[38.740,93.340]],
         optionalPath: [[37.819,93.346],[38.450,93.120],[38.740,93.340]],
         mapLabels: [
-          { name: "水上雅丹", lat: 37.819, lng: 93.346, alt: "2,700m", status: "淡季半价", desc: "冰湖配雅丹苍茫感拉满。", xhs: "水上雅丹 冬天 1月" },
-          { name: "冷湖镇(观星)", lat: 38.740, lng: 93.340, alt: "2,780m", status: "暗夜保护区", desc: "宿冷湖镇供暖酒店，晚间观星。", xhs: "冷湖 冬天 观星 星空 攻略" }
+          { name: "水上雅丹", lat: 37.819, lng: 93.346, alt: "2,700m", status: "淡季半价", desc: "冰湖配雅丹苍茫感拉满。", xhs: "水上雅丹冬天1月" },
+          { name: "冷湖镇(观星)", lat: 38.740, lng: 93.340, alt: "2,780m", status: "暗夜保护区", desc: "宿冷湖镇供暖酒店，晚间观星。", xhs: "冷湖冬天观星星空攻略" }
         ]
       },
       {
@@ -695,8 +706,8 @@
         waypoints: [[38.740,93.340],[38.940,93.450],[39.150,93.950],[39.320,94.250],[39.618,94.335],[39.950,94.450],[40.142,94.662],[40.087,94.670]],
         osrmStops: [[38.740,93.340],[38.940,93.450],[39.320,94.250],[39.618,94.335],[40.142,94.662]],
         mapLabels: [
-          { name: "黑独山", lat: 38.940, lng: 93.450, alt: "3,600–4,200m", status: "免票/景交车", desc: "距冷湖仅20分钟，水墨雅丹必去。", xhs: "黑独山 胭脂山 冬天 1月 实拍" },
-          { name: "敦煌(鸣沙山)", lat: 40.142, lng: 94.662, alt: "1,139m", status: "淡季半价", desc: "下午15:30进鸣沙山看日落。", xhs: "鸣沙山月牙泉 冬天 雪景 日落" }
+          { name: "黑独山", lat: 38.940, lng: 93.450, alt: "3,600–4,200m", status: "免票/景交车", desc: "距冷湖仅20分钟，水墨雅丹必去。", xhs: "黑独山胭脂山冬天1月实拍" },
+          { name: "敦煌(鸣沙山)", lat: 40.142, lng: 94.662, alt: "1,139m", status: "淡季半价", desc: "下午15:30进鸣沙山看日落。", xhs: "鸣沙山月牙泉冬天雪景日落" }
         ]
       },
       {
@@ -714,7 +725,7 @@
         waypoints: [[40.142,94.662],[40.036,94.809],[40.350,95.220],[40.530,95.780],[40.280,97.040],[39.802,98.216]],
         osrmStops: [[40.142,94.662],[40.036,94.809],[40.530,95.780],[39.802,98.216]],
         mapLabels: [
-          { name: "嘉峪关", lat: 39.802, lng: 98.216, alt: "1,650m", status: "淡季优惠", desc: "D6晚入住，D7上午逛天下第一雄关。", xhs: "嘉峪关关城 冬天 雪山" }
+          { name: "嘉峪关", lat: 39.802, lng: 98.216, alt: "1,650m", status: "淡季优惠", desc: "D6晚入住，D7上午逛天下第一雄关。", xhs: "嘉峪关关城冬天雪山" }
         ]
       },
       {
@@ -732,7 +743,7 @@
         waypoints: [[39.802,98.216],[39.730,98.510],[39.520,99.180],[39.375,99.820],[39.150,100.160],[38.926,100.056],[38.932,100.450]],
         osrmStops: [[39.802,98.216],[38.926,100.056],[38.932,100.450]],
         mapLabels: [
-          { name: "张掖 / 七彩丹霞", lat: 38.926, lng: 100.056, alt: "1,850m", status: "淡季开放", desc: "红岩薄雪配冬日夕阳。", xhs: "张掖七彩丹霞 冬天 1月 雪景" }
+          { name: "张掖 / 七彩丹霞", lat: 38.926, lng: 100.056, alt: "1,850m", status: "淡季开放", desc: "红岩薄雪配冬日夕阳。", xhs: "张掖七彩丹霞冬天1月雪景" }
         ]
       },
       {
@@ -751,14 +762,14 @@
         osrmStops: [[38.932,100.450],[38.230,100.890],[37.376,101.622],[36.621,101.810]],
         optionalPath: [[37.960,100.930],[38.180,100.240],[37.960,100.930]],
         mapLabels: [
-          { name: "扁都口 / 祁连草原", lat: 38.230, lng: 100.890, alt: "3,400m", status: "免费/查雪况", desc: "最美高原国道冬日雪原。", xhs: "G227 扁都口 祁连草原 冬天" },
-          { name: "门源 / 岗什卡", lat: 37.376, lng: 101.622, alt: "2,900m", status: "免费远观", desc: "5,254m雪峰配蓝天雾凇。", xhs: "岗什卡雪峰 门源 冬天" }
+          { name: "扁都口 / 祁连草原", lat: 38.230, lng: 100.890, alt: "3,400m", status: "免费/查雪况", desc: "最美高原国道冬日雪原。", xhs: "G227扁都口祁连草原冬天" },
+          { name: "门源 / 岗什卡", lat: 37.376, lng: 101.622, alt: "2,900m", status: "免费远观", desc: "5,254m雪峰配蓝天雾凇。", xhs: "岗什卡雪峰门源冬天" }
         ]
       }
     ];
 
     // ====== 1. RENDER 32-SPOT CATALOG ======
-    const PICK_KEY = "qinggan_2027_spots_v3";
+    const PICK_KEY = "qinggan_2027_spots_v4";
     let pickedSpots = {};
     try {
       const saved = localStorage.getItem(PICK_KEY);
@@ -812,7 +823,7 @@
               <button class="locate-btn" onclick="flyToCoord(${s.lat}, ${s.lng}, '${safeName}', '${safeXhs}', '${safeDesc}')">📍 地图定位</button>
               <div class="c-spot-links">
                 <a class="amap-btn" href="${amapNavUrl(s.lat, s.lng, s.name)}" target="_blank" rel="noopener">🧭 高德导航</a>
-                <a class="xhs-btn" href="${xhsUrl(s.xhs)}" target="_blank" rel="noopener">📕 小红书</a>
+                <button type="button" class="xhs-btn" onclick="openXhs('${safeXhs}')">📕 小红书</button>
               </div>
             </div>
           </div>
@@ -835,20 +846,12 @@
       Object.keys(byDay).sort((a, b) => Number(a) - Number(b)).forEach(d => lines.push(`D${d}：${byDay[d].join("、")}`));
       lines.push(`共 ${selected.length} 个景点`);
       const text = lines.join("\n");
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(() => showToast(`已复制 ${selected.length} 个景点，可直接粘贴发微信！`)).catch(() => fallbackCopy(text, selected.length));
-      } else { fallbackCopy(text, selected.length); }
+      copyTextSilent(text);
+      showToast(`已复制 ${selected.length} 个景点，可直接粘贴发微信！`);
     };
-    function fallbackCopy(text, count) {
-      const ta = document.createElement("textarea");
-      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
-      document.body.appendChild(ta); ta.select();
-      try { document.execCommand("copy"); showToast(`已复制 ${count} 个景点，可直接粘贴发微信！`); } catch (e) { alert(text); }
-      document.body.removeChild(ta);
-    }
     renderCatalog();
 
-    // ====== 2. RENDER DAILY TIMELINES + QUICK DAY JUMP BAR ======
+    // ====== 2. RENDER DAILY TIMELINES ======
     const dayJumpBar = document.getElementById("dayJumpBar");
     const daysContainer = document.getElementById("daysContainer");
     DAYS.forEach(d => {
@@ -920,7 +923,7 @@
       { id: "p15", cat: "药品补给", title: "葡萄糖口服液、布洛芬、感冒/肠胃/晕车药", sub: "应对轻度高反与长途不适" },
       { id: "p16", cat: "药品补给", title: "饮用水、自热饭、坚果巧克力（西宁采购）", sub: "冷湖与雅丹段餐饮少，自热锅很实用" }
     ];
-    const PACK_KEY = "qinggan_2027_pack_v7";
+    const PACK_KEY = "qinggan_2027_pack_v8";
     let checkedMap = {};
     try { checkedMap = JSON.parse(localStorage.getItem(PACK_KEY) || "{}"); } catch (e) {}
     const packCats = ["全部", ...new Set(PACK_ITEMS.map(i => i.cat))];
@@ -950,7 +953,7 @@
     };
     renderChecklist();
 
-    // ====== 4. LEAFLET MAP + REAL HIGHWAY ROUTING ======
+    // ====== 4. LEAFLET MAP (DEFAULT AMAP FOR CHINA DIRECT ACCESS) ======
     let map, allGroup, tempMarker;
     const dayLayers = {};
     const dayPolylines = {};
@@ -966,12 +969,12 @@
       L.control.scale({ metric: true, imperial: false }).addTo(map);
 
       const tileLayers = {
-        osm: L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap" }),
         amap: L.tileLayer("https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}", {
           subdomains: ["1", "2", "3", "4"], maxZoom: 18, attribution: "© 高德地图"
-        })
+        }),
+        osm: L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap" })
       };
-      let currentBase = tileLayers.osm.addTo(map);
+      let currentBase = tileLayers.amap.addTo(map);
 
       document.querySelectorAll(".layer-btn").forEach(btn => {
         btn.addEventListener("click", () => {
@@ -999,6 +1002,7 @@
         }
 
         d.mapLabels.forEach(s => {
+          const safeXhs = s.xhs.replace(/'/g, "\\'");
           const marker = L.circleMarker([s.lat, s.lng], {
             radius: 6,
             fillColor: s.opt ? "#d97706" : (s.name.includes("冷湖") ? "#4338ca" : "#1c2430"),
@@ -1015,7 +1019,7 @@
               <div>${s.desc}</div>
               <div class="popup-btns">
                 <a class="amap-btn" href="${amapNavUrl(s.lat, s.lng, s.name)}" target="_blank" rel="noopener">🧭 高德导航</a>
-                <a class="xhs-btn" href="${xhsUrl(s.xhs)}" target="_blank" rel="noopener">📕 小红书</a>
+                <button type="button" class="xhs-btn" onclick="openXhs('${safeXhs}')">📕 小红书</button>
               </div>
             </div>
           `);
@@ -1091,6 +1095,7 @@
       if (!map) return;
       selectDay("all");
       if (tempMarker) map.removeLayer(tempMarker);
+      const safeXhs = xhsKw.replace(/'/g, "\\'");
       tempMarker = L.circleMarker([lat, lng], {
         radius: 9, fillColor: "#ff2442", color: "#ffffff", weight: 2.5, fillOpacity: 0.95
       }).addTo(map).bindPopup(`
@@ -1099,7 +1104,7 @@
           <div>${desc}</div>
           <div class="popup-btns">
             <a class="amap-btn" href="${amapNavUrl(lat, lng, name)}" target="_blank" rel="noopener">🧭 高德导航</a>
-            <a class="xhs-btn" href="${xhsUrl(xhsKw)}" target="_blank" rel="noopener">📕 小红书</a>
+            <button type="button" class="xhs-btn" onclick="openXhs('${safeXhs}')">📕 小红书</button>
           </div>
         </div>
       `);
@@ -1110,7 +1115,6 @@
       }, 150);
     };
 
-    // Init page from URL hash if present
     const initHash = (location.hash || "").replace("#", "");
     if (["map", "catalog", "itinerary", "packing", "tips"].includes(initHash)) {
       switchPage(initHash, true);
@@ -1120,7 +1124,7 @@
       initMap();
     } else {
       const s = document.createElement("script");
-      s.src = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js";
+      s.src = "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js";
       s.onload = initMap;
       s.onerror = initMap;
       document.body.appendChild(s);
