@@ -437,7 +437,7 @@
       <div class="brand">🌌 青甘大环线 · 8天7晚冬季攻略</div>
       <nav class="desktop-tabs" aria-label="页面切换">
         <button class="nav-tab active" data-page="map" onclick="switchPage('map')">🗺️ 地图路线</button>
-        <button class="nav-tab" data-page="catalog" onclick="switchPage('catalog')">🧭 35景点备选</button>
+        <button class="nav-tab" data-page="catalog" onclick="switchPage('catalog')">🧭 36景点备选</button>
         <button class="nav-tab" data-page="itinerary" onclick="switchPage('itinerary')">🗓️ 逐日时间表</button>
         <button class="nav-tab" data-page="packing" onclick="switchPage('packing')">🧳 气温与装备</button>
         <button class="nav-tab" data-page="tips" onclick="switchPage('tips')">⚠️ 注意与美食</button>
@@ -451,10 +451,10 @@
       <div class="hero-card">
         <span class="hero-tag">国内免VPN直连 · 手机直跳小红书App + 高德导航</span>
         <h1>青甘大环线 8天7晚 冬季自驾地图</h1>
-        <p>D4 宿冷湖观星零回头路，D5 黑独山+鸣沙山日落，D6 莫高窟+宿嘉峪关，D7 仅开 230km 宿张掖。</p>
+        <p>D4 宿冷湖观星零回头路，D5 黑独山+鸣沙山日落，D6 莫高窟+宿嘉峪关，D7 仅开 230km 宿张掖市区，D8 打卡峨堡镇雪山公路+岗什卡连心湖。</p>
         <div class="kpi-grid">
           <div class="kpi"><div class="kpi-label">总行程</div><div class="kpi-val">8天7晚（零回头）</div></div>
-          <div class="kpi"><div class="kpi-label">总自驾里程</div><div class="kpi-val">约 2,350 km</div></div>
+          <div class="kpi"><div class="kpi-label">总自驾里程</div><div class="kpi-val">约 2,400 km</div></div>
           <div class="kpi"><div class="kpi-label">观星夜</div><div class="kpi-val">D4 冷湖暗夜区</div></div>
           <div class="kpi"><div class="kpi-label">D5 黑独山+敦煌</div><div class="kpi-val">约 270 km</div></div>
           <div class="kpi"><div class="kpi-label">D7 休整日</div><div class="kpi-val">仅 230 km</div></div>
@@ -527,9 +527,9 @@
       </div>
     </div>
 
-    <!-- PAGE 2: 35-SPOT CATALOG -->
+    <!-- PAGE 2: 36-SPOT CATALOG -->
     <div class="page-view" id="page-catalog">
-      <h2>🧭 沿线 35 景点备选库</h2>
+      <h2>🧭 沿线 36 景点备选库</h2>
       <p class="sec-sub">手机点「📕 小红书」直跳小红书 App 搜索页（同时复制关键词备用）；点「🧭 高德导航」直接唤起高德驾车导航；所有门票与营业时间含 2026–2027 冬季淡季实操参考</p>
       <div class="catalog-card">
         <div class="cat-toolbar">
@@ -537,7 +537,7 @@
           <div class="cat-actions">
             <div class="cat-actions-left">
               <input type="search" id="spotSearchInput" class="search-input" placeholder="🔍 搜索景点名、关键字或避坑提示" oninput="setSpotSearch(this.value)" />
-              <span class="picked-badge" id="pickedCount">已选 18 / 35</span>
+              <span class="picked-badge" id="pickedCount">已选 22 / 36</span>
             </div>
             <div class="cat-actions-right">
               <button class="only-picked-btn" id="onlyPickedBtn" onclick="toggleOnlyPicked()">只看已选</button>
@@ -736,6 +736,13 @@
                 <td>08:30–17:00（<strong>17:00 停止入场</strong>）</td>
                 <td><strong>北门 2026.11 起改造停用，必须从西门或东门入园！</strong>15:30 准时入园看日落</td>
               </tr>
+              <tr>
+                <td><strong>岗什卡雪峰（连心湖 &amp; 七彩冰瀑）</strong> (D8)</td>
+                <td><strong>免首道门票</strong></td>
+                <td><strong>必乘景区摆渡车约 25 元</strong>（骑马至 4,123m 观峰台往返约 200 元）</td>
+                <td>09:00–17:00（<strong>D8 最晚 15:15 离园</strong>）</td>
+                <td>海拔 3,850m 骤升防高反；轻游连心湖+冰瀑约 2h 即可，不建议徒步 4,300m 大本营</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -753,7 +760,7 @@
           <div class="budget-card">
             <div class="budget-label">⛽ 油费 + 高速费</div>
             <div class="budget-val">1,700 – 2,200 元</div>
-            <div class="budget-sub">约 2,350km，冬季油耗略高（油费约 1,350–1,700 元 + 过路费约 350–500 元）</div>
+            <div class="budget-sub">约 2,400km，冬季油耗略高（油费约 1,350–1,700 元 + 过路费约 350–500 元）</div>
           </div>
           <div class="budget-card">
             <div class="budget-label">🏨 7晚供暖住宿</div>
@@ -828,7 +835,7 @@
 
   <nav class="mobile-bottom-nav" aria-label="底部页面导航">
     <button class="m-tab active" data-page="map" onclick="switchPage('map')"><span class="ico">🗺️</span><span>地图</span></button>
-    <button class="m-tab" data-page="catalog" onclick="switchPage('catalog')"><span class="ico">🧭</span><span>35景点</span></button>
+    <button class="m-tab" data-page="catalog" onclick="switchPage('catalog')"><span class="ico">🧭</span><span>36景点</span></button>
     <button class="m-tab" data-page="itinerary" onclick="switchPage('itinerary')"><span class="ico">🗓️</span><span>时间表</span></button>
     <button class="m-tab" data-page="packing" onclick="switchPage('packing')"><span class="ico">🧳</span><span>气温装备</span></button>
     <button class="m-tab" data-page="tips" onclick="switchPage('tips')"><span class="ico">⚠️</span><span>注意美食</span></button>
@@ -943,7 +950,8 @@
 
       { id: "s33", seg: "祁连&门源", day: 8, name: "扁都口 & G227 祁连山草原", status: "免费/查雪况", tag: "warn", defaultPick: true, lat: 38.230, lng: 100.890, cost: "免费", hours: "全天（雪天可能管制）", tip: "山路大货车多、背阴坡有暗冰；出发前查路况，若暴雪封路改走 G30 连霍高速经武威回。", desc: "中国最美高原国道，冬季草原变苍茫雪原。", xhs: "G227扁都口祁连草原冬天" },
       { id: "s34", seg: "祁连&门源", day: 8, name: "祁连卓尔山 & 阿柔大寺", status: "可选/视雪况", tag: "opt", defaultPick: false, lat: 38.180, lng: 100.240, cost: "淡季约40元/免费", hours: "09:00–17:00", tip: "偏离 G227 主线需多绕约 120km 山路，若 D8 赶西宁还车或遇雪一般不绕行。", desc: "远望牛心山雪峰与祁连最大藏传寺院。", xhs: "祁连卓尔山阿柔大寺冬天" },
-      { id: "s35", seg: "祁连&门源", day: 8, name: "岗什卡雪峰 & 门源 & 达坂山", status: "免费远观", tag: "open", defaultPick: true, lat: 37.376, lng: 101.622, cost: "免费", hours: "全天（达坂山视雪况）", tip: "青石嘴/达坂山观景台海拔近3,792m 风雪大，注意防滑，遇冰雪走隧道下山。", desc: "5,254m 雪峰配冬日雾凇与达坂山盘山雪路。", xhs: "岗什卡雪峰门源达坂山冬天" }
+      { id: "s35", seg: "祁连&门源", day: 8, name: "岗什卡雪峰（连心湖 & 七彩冰瀑）", status: "冬季正常开放", tag: "open", defaultPick: true, lat: 37.655, lng: 101.460, cost: "免首道门票（摆渡车约25元，骑马另计）", hours: "09:00–17:00（D8最晚15:15离园）", tip: "停游客中心换摆渡车7km进山；D8轻游连心湖+冰瀑约2h即可，不建议徒步4,300m大本营防摸黑；山谷-15~-25℃备冰爪墨镜。", desc: "海拔3,850m 冰封连心湖倒映雪峰 + 巨型七彩冰瀑，1月冰雪季颜值巅峰。", xhs: "岗什卡雪峰连心湖七彩冰瀑冬天1月" },
+      { id: "s36", seg: "祁连&门源", day: 8, name: "峨堡镇网红雪山公路 & 俄博岭垭口", status: "免费/顺路打卡", tag: "open", defaultPick: true, lat: 37.965, lng: 100.935, cost: "免费", hours: "全天（视雪况管制）", tip: "导航「峨堡古城遗址」和「俄博岭垭口观景台」，大货车多务必停宽阔路肩/停车港湾，严禁站路中拍照。", desc: "G227 笔直通向雪山的公路大片机位 + 3,685m 俄博岭垭口高空全景。", xhs: "峨堡镇公路俄博岭垭口冬天雪山" }
     ];
 
     const DAYS = [
@@ -1087,10 +1095,10 @@
       {
         day: 7, short: "D7",
         title: "嘉峪关关城 → 张掖七彩丹霞日落（最轻松休整日）",
-        km: "约 230 km", driveTime: "纯车程 2.5–3h", stay: "张掖市区/七彩镇", alt: "1,650m → 1,850m",
+        km: "约 230 km", driveTime: "纯车程 2.5–3h", stay: "张掖市区（强烈推荐）", alt: "1,650m → 1,850m",
         sun: "日出 08:30 / 日落 18:37（张掖）",
         fuel: "G30 连霍高速路况极佳，张掖市区与丹霞七彩镇补油方便，信号稳定。",
-        lodging: "想拍完丹霞少开车可住「七彩镇（西门/东门附近）」；想吃美食更方便可住张掖市区（距景区约 40min）。",
+        lodging: "强烈建议住张掖市区（距景区约 40min），帮 D8 早上省出 45 分钟，才能从容打卡峨堡镇公路+岗什卡连心湖！",
         booking: "嘉峪关淡季 90 元一票当日通悬壁长城+第一墩；七彩丹霞提前一天购冬季半价套票（约73–85元），<strong>17:00停入且北门停用，必从西门或东门进</strong>。",
         note: "全线最轻松的一天，充分回血！提醒：七彩丹霞北门游客中心 2026 年 11 月起升级改造暂停接待，导航直接搜「张掖七彩丹霞西门」或「东门」。",
         schedule: [
@@ -1098,7 +1106,7 @@
           ["11:30–12:30", "嘉峪关午餐后轻松上高速"],
           ["12:30–15:15", "沿 G30 连霍高速直奔张掖七彩丹霞西门/东门（仅约2.5–2.75h）"],
           ["15:25–18:15", "17:00 停检前入园游览七彩丹霞（2号/4号观景台看夕阳映白雪）"],
-          ["18:30", "入住张掖市区或七彩镇，晚吃张掖卷子鸡 / 牛肉小饭 / 炒炮仗"]
+          ["18:30", "返回入住张掖市区（帮 D8 省 45min 车程），晚吃张掖卷子鸡 / 牛肉小饭 / 炒炮仗"]
         ],
         waypoints: [[39.802,98.216],[39.730,98.510],[39.520,99.180],[39.375,99.820],[39.150,100.160],[38.926,100.056],[38.932,100.450]],
         osrmStops: [[39.802,98.216],[38.926,100.056],[38.932,100.450]],
@@ -1108,38 +1116,43 @@
       },
       {
         day: 8, short: "D8",
-        title: "张掖 → 扁都口 → G227 祁连草原 → 门源 → 西宁还车",
-        km: "约 360 km", driveTime: "纯车程 5.5–6h", stay: "西宁还车 / 返程", alt: "1,480m → 2,295m",
+        title: "张掖 → 扁都口 → 峨堡镇公路 → 岗什卡连心湖 → 西宁还车",
+        km: "约 395 km", driveTime: "纯车程 6h", stay: "西宁还车 / 返程", alt: "1,480m → 3,850m → 2,295m",
         sun: "日出 08:18 / 日落 18:35（西宁）",
-        fuel: "张掖加满油出发；扁都口、景阳岭、达坂山等山区垭口信号弱，门源县城可再次补油再返西宁。",
-        lodging: "17:30 前西宁站还车；当晚搭高铁回兰州建议住中川机场附近或兰州西站旁（次日早班机从容）。",
-        booking: "提前订好「西宁→兰州西→中川机场东」返程高铁，预留足够验车还车缓冲时间。",
-        planB: "⚠️ 若出发前查到扁都口或达坂山暴雪封路/强制交通管制，立刻放弃 G227，改走 G30 连霍高速经武威、永登返回西宁或直达兰州（虽多约 180km 但全程高速除雪保障最高）。",
-        note: "出发前务必查扁都口与达坂山降雪管制！大货车多且弯坡易有暗冰，下坡控速善用发动机制动，回西宁还车拍好还车视频。",
+        fuel: "张掖市区满油出发；扁都口、俄博岭、岗什卡山谷及达坂山信号弱，青石嘴或门源可补油后再返西宁。",
+        lodging: "18:15 前西宁站还车；当晚搭高铁回兰州建议 19:30 后车次，返程航班强烈建议订次日（D9）防雪况或摆渡车排队误机。",
+        booking: "岗什卡雪峰冬季正常开放，私家车停游客中心换乘摆渡车（约 25 元/人）进连心湖；不建议 D8 徒步 4,300m 大本营（易摸黑），想冲 4,123m 观峰台可骑马往返（约 200 元）。",
+        planB: "⚠️ 若早起查到扁都口、俄博岭或达坂山暴雪封闭，果断放弃 G227 与岗什卡，直接从张掖走 G30 连霍高速经武威、永登返回西宁或直达兰州。",
+        note: "D5–D7 一直在低海拔，今天半天骤升至 3,685m 俄博岭→3,850m 连心湖，务必慢走防高反并随身带热水/氧气瓶；岗什卡山谷 -15℃～-25℃ 必戴冰爪与墨镜，最晚 15:15 离开游客中心穿达坂山隧道返西宁。",
         schedule: [
-          ["08:00–08:30", "张掖满油出发，核实扁都口 & 达坂山实时路况后上 G227 国道"],
-          ["08:30–11:00", "翻扁都口抵 G227 祁连山大草原（沿途观景台停车拍冬日雪原与雪山约45min）"],
-          ["11:00–14:00", "经景阳岭抵门源（远观岗什卡雪峰停20min），门源午餐 1h 吃黄焖羊肉"],
-          ["14:00–16:30", "经达坂山（视雪况停观景台或直接穿隧道下山）返回西宁市区"],
-          ["16:30–17:30", "西宁还车验车，圆满结束大环线（回兰州搭机建议21:00后或次日）"]
+          ["07:45–10:15", "张掖市区满油出发（查扁都口/俄博岭/达坂山雪况），沿 G227 翻扁都口抵峨堡镇（约150km）"],
+          ["10:15–11:00", "打卡峨堡镇网红雪山公路（峨堡古城周边）& 俄博岭垭口观景台（3,685m，安全停车区拍45min）"],
+          ["11:00–12:30", "沿 G227 至青石嘴转景区支线抵岗什卡游客中心（约75–80km；青石嘴快餐或车上简餐）"],
+          ["12:30–14:45", "换乘摆渡车（约25元）轻游连心湖 & 七彩冰瀑（3,850m，约2h；最晚15:15发车返西宁）"],
+          ["15:00–17:30", "直接穿达坂山隧道下山返西宁市区（约165km，放弃垭口老路省时避暗冰）"],
+          ["17:30–18:15", "西宁站周边还车验车（赶在 18:35 日落前），圆满收官大环线"]
         ],
-        waypoints: [[38.932,100.450],[38.435,100.815],[38.230,100.890],[37.960,100.930],[37.650,101.280],[37.376,101.622],[37.345,101.400],[36.930,101.680],[36.621,101.810]],
-        osrmStops: [[38.932,100.450],[38.230,100.890],[37.376,101.622],[36.621,101.810]],
-        optionalPath: [[37.960,100.930],[38.180,100.240],[37.960,100.930]],
+        waypoints: [[38.932,100.450],[38.435,100.815],[38.230,100.890],[37.965,100.935],[37.825,100.960],[37.450,101.410],[37.655,101.460],[37.450,101.410],[37.345,101.400],[36.930,101.680],[36.621,101.810]],
+        osrmStops: [[38.932,100.450],[38.230,100.890],[37.965,100.935],[37.655,101.460],[36.621,101.810]],
+        optionalPath: [[37.965,100.935],[38.180,100.240],[37.965,100.935]],
         mapLabels: [
-          { name: "扁都口 / 祁连草原", lat: 38.230, lng: 100.890, alt: "3,400m", status: "免费/查雪况", desc: "最美高原国道冬日雪原。", xhs: "G227扁都口祁连草原冬天" },
-          { name: "门源 / 岗什卡", lat: 37.376, lng: 101.622, alt: "2,900m", status: "免费远观", desc: "5,254m雪峰配蓝天雾凇。", xhs: "岗什卡雪峰门源冬天" }
+          { name: "峨堡镇公路 / 俄博岭", lat: 37.965, lng: 100.935, alt: "3,400–3,685m", status: "免费/雪山公路", desc: "G227 网红雪山公路与俄博岭垭口全景。", xhs: "峨堡镇公路俄博岭垭口冬天雪山" },
+          { name: "岗什卡·连心湖", lat: 37.655, lng: 101.460, alt: "3,800–3,850m", status: "摆渡车25元", desc: "冰封连心湖与七彩冰瀑，最晚15:15发车返西宁。", xhs: "岗什卡雪峰连心湖七彩冰瀑冬天1月" }
         ]
       }
     ];
 
-    // ====== 1. RENDER 35-SPOT CATALOG ======
+    // ====== 1. RENDER 36-SPOT CATALOG ======
     const PICK_KEY = "qinggan_2027_spots_v4";
     let pickedSpots = {};
     try {
       const saved = localStorage.getItem(PICK_KEY);
-      if (saved) pickedSpots = JSON.parse(saved);
-      else CATALOG.forEach(s => { if (s.defaultPick) pickedSpots[s.id] = true; });
+      if (saved) {
+        pickedSpots = JSON.parse(saved);
+        CATALOG.forEach(s => { if (s.defaultPick && !(s.id in pickedSpots)) pickedSpots[s.id] = true; });
+      } else {
+        CATALOG.forEach(s => { if (s.defaultPick) pickedSpots[s.id] = true; });
+      }
     } catch (e) {
       CATALOG.forEach(s => { if (s.defaultPick) pickedSpots[s.id] = true; });
     }
@@ -1226,7 +1239,7 @@
       const inp = document.getElementById("spotSearchInput");
       if (inp) inp.value = "";
       renderCatalog();
-      showToast("已恢复默认 18 个核心景点");
+      showToast("已恢复默认 22 个核心景点");
     };
     window.openSpotXhs = (id) => {
       const s = CATALOG.find(x => x.id === id);
@@ -1302,7 +1315,7 @@
       { city: "大柴旦 / 冷湖", alt: "2,780–3,170m", sun: "日出08:52 / 日落18:58", hi: 0, lo: -17, tip: "全线最干冷段，冷湖夜观星多贴暖宝宝+穿羽绒裤。" },
       { city: "敦煌 / 嘉峪关", alt: "1,139–1,650m", sun: "日出08:54 / 日落18:56", hi: 3, lo: -12, tip: "低海拔无高反，午后阳光足，18:00 后气温骤降。" },
       { city: "张掖", alt: "1,480–1,850m", sun: "日出08:30 / 日落18:37", hi: 2, lo: -13, tip: "干冷晴朗居多，丹霞山顶看日落风冷必戴帽手套。" },
-      { city: "祁连 / 门源", alt: "2,800–3,792m", sun: "日出08:22 / 日落18:38", hi: 0, lo: -15, tip: "垭口易降雪起雾结暗冰，行前务必查交警实时路况。" }
+      { city: "祁连 / 岗什卡", alt: "2,800–3,850m", sun: "日出08:22 / 日落18:38", hi: 0, lo: -15, tip: "垭口易降雪暗冰；岗什卡山谷可达 -15℃～-25℃ 且风寒强，必带冰爪与防雪盲墨镜。" }
     ];
     document.getElementById("weatherGrid").innerHTML = WEATHER.map(w => {
       const hiPct = Math.max(18, Math.min(100, ((w.hi + 18) / 26) * 100));
